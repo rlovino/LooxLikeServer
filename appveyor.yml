@@ -1,0 +1,43 @@
+#before_build:
+#  - nuget restore
+  
+#deploy:
+#  release: myproduct-v$(appveyor_build_version)
+#  provider: GitHub
+#  auth_token:
+#    secure: $(GITHUB_TOKEN) # your encrypted token from GitHub
+#  artifact: /.*\.nupkg/            # upload all NuGet packages to release assets
+#  draft: false
+#  prerelease: false
+#  on:
+#    branch: master                 # release from master branch only
+#    appveyor_repo_tag: false        # deploy on tag push only
+
+version: 1.0.{build}
+services: iis
+before_build:
+  - nuget restore
+build:
+  verbosity: minimal
+
+#artifacts:
+
+  # pushing a single file
+ # - path: test.zip  
+
+after_build:
+  7z a myapp.zip LooxLikeAPI\*
+#  7z a myapp.zip LooxLikeAPI\bin\*
+
+
+artifacts:
+  - path: myapp.zip
+    name: LooxLikeServer
+
+
+#deploy:
+#  provider: GitHub
+#  auth_token:
+#    secure: PHg9/N+HBfydId7cus+Vt9ag7Oa2tpXrclSuKACGdaWKKR2A0NuE+thmQn4RY9bc
+#
+#
