@@ -13,7 +13,7 @@
 #    branch: master                 # release from master branch only
 #    appveyor_repo_tag: false        # deploy on tag push only
 
-version: 1.0.{build}
+version: 0.0.{build}
 services: iis
 before_build:
   - nuget restore
