@@ -5,6 +5,8 @@ VisualStudioVersion = 12.0.40629.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LooxLikeAPI", "LooxLikeAPI\LooxLikeAPI.csproj", "{AF9FA218-7495-47C0-9EAF-9B5E91153E84}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LooxLikeAPI.Tests", "LooxLikeAPI.Tests\LooxLikeAPI.Tests.csproj", "{90389A0C-3F7D-4D00-B69E-4F1651F400E9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{AF9FA218-7495-47C0-9EAF-9B5E91153E84}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AF9FA218-7495-47C0-9EAF-9B5E91153E84}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AF9FA218-7495-47C0-9EAF-9B5E91153E84}.Release|Any CPU.Build.0 = Release|Any CPU
+		{90389A0C-3F7D-4D00-B69E-4F1651F400E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{90389A0C-3F7D-4D00-B69E-4F1651F400E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{90389A0C-3F7D-4D00-B69E-4F1651F400E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{90389A0C-3F7D-4D00-B69E-4F1651F400E9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

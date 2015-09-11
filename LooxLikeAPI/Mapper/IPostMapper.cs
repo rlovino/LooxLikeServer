@@ -10,7 +10,7 @@ namespace LooxLikeAPI.Mapper
     public interface IPostMapper
     {
         PostResponse convert(Post post);
-     //   public PostRequest convert(Post post); TO DO
+     //   public Post convert(PostRequest postRequest); TO DO
 
 
     }
