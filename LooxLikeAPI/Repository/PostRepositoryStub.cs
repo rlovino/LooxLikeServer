@@ -34,6 +34,11 @@ namespace LooxLikeAPI.Repository
             }
             return null;
         }
+
+        public long save(Post post)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     

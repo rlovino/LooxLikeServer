@@ -24,8 +24,7 @@ namespace LooxLikeAPI.Tests.MapperTests
         {
             var expectedResult = new PostResponse{Id = 0,Message = "message_test"};
             var response = _sut.convert(_input);
-            //Assert.Equals(expectedResult, response);
-            Assert.AreEqual(2,3);
+            Assert.Equals(expectedResult, response);
         }
 
 
