@@ -10,7 +10,7 @@ namespace LooxLikeAPI.Controllers
 {
     public class PostController : ApiController
     {
-        private IPostService _postService;
+        private readonly IPostService _postService;
 
         public PostController(IPostService postService)
         {
