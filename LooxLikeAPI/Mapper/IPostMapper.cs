@@ -1,15 +1,16 @@
-﻿using LooxLikeAPI.Models;
-using LooxLikeAPI.Response;
+﻿using LooxLikeAPI.Response;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using LooxLikeAPI.Models.DBModel;
+using LooxLikeAPI.Models.Modle;
 
 namespace LooxLikeAPI.Mapper
 {
     public interface IPostMapper
     {
-        PostResponse convert(Post post);
+        PostResponse convert(DbPost post);
      //   public Post convert(PostRequest postRequest); TO DO
 
 

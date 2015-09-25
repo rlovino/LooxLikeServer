@@ -1,33 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Services.Description;
-using System.Web.UI;
-using LooxLikeAPI.Models;
-using Simple.Data;
+﻿using LooxLikeAPI.Models.DBModel;
 
 namespace LooxLikeAPI.Repository
 {
     public class PostRepository : IPostRepository
     {
 
-        private dynamic _db;
+        private dynamic _connection;
 
-        public PostRepository(dynamic db)
+        public PostRepository(dynamic connection)
         {
-            this._db = db;
+            this._connection = connection;
         }
 
-        public Post read(long id)
+        public DbPost read(long id)
         {
-           return (Post)_db.Post.FindById(id);
+            return (DbPost)_connection.posts.FindById(id);
         }
 
-        public long save(Post post)
+        public long save(DbPost dbPost)
         {
-            Post a = _db.Post.Insert(Message: post.Message);
-            return a.Id;
+            var result = _connection.posts.Insert(item_id: dbPost.ItemId, text: dbPost.Text, user_id: dbPost.UserId, photo_url: dbPost.PhotoUrl);
+            return result.id;
         }
     }
 }

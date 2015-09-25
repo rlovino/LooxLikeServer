@@ -66,8 +66,8 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
-    <Compile Include="MapperTests\PostMapperTest.cs" />
-    <Compile Include="MapperTests\DbTest.cs" />
+    <Compile Include="MapperTests\DbUtils.cs" />
+    <Compile Include="MapperTests\PostRepositoryTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

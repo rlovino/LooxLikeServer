@@ -1,16 +1,10 @@
-﻿using LooxLikeAPI.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
+﻿using LooxLikeAPI.Models.DBModel;
 
 namespace LooxLikeAPI.Repository
 {
     public interface IPostRepository
     {
-        Post read(long id);
-        long save(Post post);
+        DbPost read(long id);
+        long save(DbPost post);
     }
 }

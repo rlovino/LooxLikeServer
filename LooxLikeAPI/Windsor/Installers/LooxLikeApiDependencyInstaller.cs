@@ -51,6 +51,7 @@ namespace LooxLikeAPI.Windsor.Installer
             conn.Close();
 
             return Database.OpenFile(DATABASE_NAME);*/
+
             return Database.OpenConnection("data source=.;initial catalog=Xyz;etc");
         }
 
