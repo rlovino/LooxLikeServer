@@ -7,21 +7,20 @@ namespace LooxLikeAPI.Tests.MapperTests
 {
     class DbUtils
     {
-        private const String DATABASE_NAME = "testdb";
-        public static dynamic createConnection(String createTable)
+        public static dynamic createConnection(String dbName, String createTable)
         {
-            if(File.Exists(DATABASE_NAME))
-                File.Delete(DATABASE_NAME);
+            if (File.Exists(dbName))
+                File.Delete(dbName);
 
-            SqlCeEngine _en = new SqlCeEngine("Data Source = " + DATABASE_NAME);
+            SqlCeEngine _en = new SqlCeEngine("Data Source = " + dbName);
             _en.CreateDatabase();
             _en.Dispose();
-            SqlCeConnection conn = new SqlCeConnection("Data Source = " + DATABASE_NAME);
+            SqlCeConnection conn = new SqlCeConnection("Data Source = " + dbName);
             conn.Open();
             SqlCeCommand comm = new SqlCeCommand(createTable, conn);
             Console.WriteLine("Response: " + comm.ExecuteNonQuery());
             conn.Close();
-            return Database.OpenFile(DATABASE_NAME);
+            return Database.OpenFile(dbName);
         }
     }
 }

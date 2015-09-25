@@ -1,13 +1,11 @@
 ﻿using LooxLikeAPI.Response;
 using LooxLikeAPI.Models.DBModel;
+using LooxLikeAPI.Models.Model;
 
 namespace LooxLikeAPI.Mapper
 {
     public interface IPostMapper
     {
-        PostResponse convert(DbPost post);
-     //   public Post convert(PostRequest postRequest); TO DO
-
-
+        Post convert(DbPost post);
     }
 }

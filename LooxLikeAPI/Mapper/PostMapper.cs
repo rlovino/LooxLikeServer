@@ -1,18 +1,30 @@
 ﻿using System;
 using LooxLikeAPI.Models.DBModel;
+using LooxLikeAPI.Models.Model;
+using LooxLikeAPI.Repository;
 
 namespace LooxLikeAPI.Mapper
 {
     public class PostMapper : IPostMapper
     {
+        private IUserRepository _userRepository;
 
-        public Response.PostResponse convert(DbPost post)
+        public PostMapper(IUserRepository userRepository)
         {
-          /*  PostResponse response = new PostResponse();
-            response.Id = post.Id;
-            response.Message = post.Message;
-            return response;*/
-            throw new NotImplementedException();
+            _userRepository = userRepository;
+        }
+
+        public Post convert(DbPost post)
+        {
+            return new Post
+            {
+                Id = post.Id,
+                ItemId = post.ItemId,
+                PhotoUrl = post.PhotoUrl,
+                Text = post.Text,
+                TimeStamp = post.Timestamp,
+ //TODO               User = _userRepository.read(post.UserId);
+            };
         }
     }
 }

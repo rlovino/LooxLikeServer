@@ -8,13 +8,14 @@ namespace LooxLikeAPI.Models.DBModel
 {
     public class DbUser
     {
-        public long UserId { get; set; }
-        public String Username { get; set; }
-        public String Firstname { get; set; }
-        public String Lastname { get; set; }
-        public String Sex { get; set; }
-        public String  Email { get; set; }
-        public String City { get; set; }
-        public DateTime Birthdat { get; set; }  
+        public long Id { get; set; }
+        public string UserName { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Sex { get; set; }
+        public string  Email { get; set; }
+        public string City { get; set; }
+        public DateTime DateOfBirth { get; set; }
+        public string PictureUrl { get; set; }
     }
 }

@@ -66,9 +66,11 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="MappersTest\PostMapperTest.cs" />
     <Compile Include="RepositoriesTest\DbUtils.cs" />
     <Compile Include="RepositoriesTest\PostRepositoryTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RepositoriesTest\UserRepositoryTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

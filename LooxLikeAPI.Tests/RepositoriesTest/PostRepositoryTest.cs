@@ -20,14 +20,14 @@ namespace LooxLikeAPI.Tests.MapperTests
         [SetUp]
         public void setUp()
         {
-            connection = DbUtils.createConnection(createTable);
+            connection = DbUtils.createConnection("TestDbPostRepository.sdf",createTable);
            _sut = new PostRepository(connection);
         }
 
 
 
         [Test]
-        public void TestReadPostMessage()
+        public void TestReadDbPost()
         {
             var dbPost = new DbPost { ItemId = "188", Text = "post", PhotoUrl = "urlPhoto", UserId = 1};
             var id = _sut.save(dbPost);

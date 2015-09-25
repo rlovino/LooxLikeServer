@@ -22,7 +22,7 @@ namespace LooxLikeAPI.Services
 
         public Response.PostResponse getPostResponse(long id)
         {
-            return postMapper.convert(postRepository.read(id));
+            throw new NotImplementedException();
         }
     }
 }

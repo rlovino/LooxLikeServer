@@ -24,6 +24,7 @@ namespace LooxLikeAPI.Windsor.Installer
                 Component.For<dynamic>().UsingFactoryMethod(CreateSimpleDataConnection),
                 //Register repositories
                 Component.For(typeof (IPostRepository)).ImplementedBy(typeof (PostRepository)).LifestyleTransient(),
+                Component.For(typeof(IUserRepository)).ImplementedBy(typeof(UserRepository)).LifestyleTransient(),
                 //Register mapper
                 Component.For(typeof (IPostMapper)).ImplementedBy(typeof (PostMapper)).LifestyleTransient(),
                 //Register services
