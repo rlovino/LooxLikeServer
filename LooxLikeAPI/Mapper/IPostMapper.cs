@@ -1,10 +1,5 @@
 ﻿using LooxLikeAPI.Response;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using LooxLikeAPI.Models.DBModel;
-using LooxLikeAPI.Models.Modle;
 
 namespace LooxLikeAPI.Mapper
 {

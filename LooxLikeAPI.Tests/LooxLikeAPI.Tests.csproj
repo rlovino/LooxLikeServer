@@ -66,8 +66,8 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
-    <Compile Include="MapperTests\DbUtils.cs" />
-    <Compile Include="MapperTests\PostRepositoryTest.cs" />
+    <Compile Include="RepositoriesTest\DbUtils.cs" />
+    <Compile Include="RepositoriesTest\PostRepositoryTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -78,6 +78,9 @@
       <Project>{af9fa218-7495-47c0-9eaf-9b5e91153e84}</Project>
       <Name>LooxLikeAPI</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ServicesTest\" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
