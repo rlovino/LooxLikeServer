@@ -112,7 +112,9 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Mapper\IPostMapper.cs" />
+    <Compile Include="Mapper\IUserMapper.cs" />
     <Compile Include="Mapper\PostMapper.cs" />
+    <Compile Include="Mapper\UserMapper.cs" />
     <Compile Include="Models\DBModel\DbPost.cs" />
     <Compile Include="Models\DBModel\DbLike.cs" />
     <Compile Include="Models\DBModel\DbUser.cs" />
