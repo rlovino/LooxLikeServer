@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using LooxLikeAPI.Mapper;
 using LooxLikeAPI.Models.DBModel;
 using LooxLikeAPI.Models.Model;
+using LooxLikeAPI.Repository;
+using Moq;
 using NUnit.Framework;
 
 namespace LooxLikeAPI.Tests.MappersTest
@@ -15,11 +17,17 @@ namespace LooxLikeAPI.Tests.MappersTest
     {
 
         private IPostMapper _sut;
+        private const long UserId = 1;
 
         [SetUp]
-        public void setUp()
+        public void SetUp()
         {
-            _sut = new PostMapper();
+            
+            var userRepositoryMock = new Mock<IUserRepository>();
+            userRepositoryMock.Setup(it => it.read(UserId)).Returns(new DbUser { Id = UserId });
+
+
+            _sut = new PostMapper(userRepositoryMock.Object);
         }
 
 
@@ -34,12 +42,12 @@ namespace LooxLikeAPI.Tests.MappersTest
                 PhotoUrl = "photoUrl",
                 Text = "text",
                 Timestamp = now,
-                UserId = 3
+                UserId = UserId
             };
 
             var expectedResult = new Post
             {
-                User = new User(),
+                User = new User {Id=UserId},
                 Id = 1,
                 ItemId = "2",
                 PhotoUrl = "photoUrl",
