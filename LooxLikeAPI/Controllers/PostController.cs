@@ -1,10 +1,10 @@
-﻿using LooxLikeAPI.Response;
-using LooxLikeAPI.Services;
+﻿using LooxLikeAPI.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Http;
+using LooxLikeAPI.Models.Model;
 
 namespace LooxLikeAPI.Controllers
 {
@@ -17,9 +17,9 @@ namespace LooxLikeAPI.Controllers
             _postService = postService;
         }
 
-        public PostResponse get(long id)
+        public Post Get(long id)
         {
-            return _postService.getPostResponse(id);
+            return _postService.GetPost(id);
 
         }
 

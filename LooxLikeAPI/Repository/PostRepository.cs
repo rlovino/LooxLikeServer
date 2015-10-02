@@ -10,7 +10,7 @@ namespace LooxLikeAPI.Repository
 
         public PostRepository(dynamic connection)
         {
-            this._connection = connection;
+            _connection = connection;
         }
 
         public DbPost read(long id)
@@ -26,7 +26,10 @@ namespace LooxLikeAPI.Repository
 
         public IList<DbPost> GetDbPostsByPage(int page)
         {
-            throw new System.NotImplementedException();
+            // TODO paginazione
+            var postList = _connection.posts.FindAll();
+            return postList;
+
         }
 
         public IList<DbPost> GetDbPostsByPage(int page, string sex)

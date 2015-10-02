@@ -125,9 +125,10 @@
     <Compile Include="Repository\IUserRepository.cs" />
     <Compile Include="Repository\PostRepository.cs" />
     <Compile Include="Repository\UserRepository.cs" />
-    <Compile Include="Response\PostResponse.cs" />
     <Compile Include="Services\IPostService.cs" />
+    <Compile Include="Services\IUserService.cs" />
     <Compile Include="Services\PostService.cs" />
+    <Compile Include="Services\UserService.cs" />
     <Compile Include="Windsor\Installers\LooxLikeApiDependencyInstaller.cs" />
     <Compile Include="Windsor\WindsorDependencyResolver.cs" />
     <Compile Include="Windsor\WindsorDependencyScope.cs" />
@@ -144,6 +145,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Request\" />
+    <Folder Include="Response\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

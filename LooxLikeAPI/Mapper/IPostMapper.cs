@@ -1,5 +1,4 @@
-﻿using LooxLikeAPI.Response;
-using LooxLikeAPI.Models.DBModel;
+﻿using LooxLikeAPI.Models.DBModel;
 using LooxLikeAPI.Models.Model;
 
 namespace LooxLikeAPI.Mapper
