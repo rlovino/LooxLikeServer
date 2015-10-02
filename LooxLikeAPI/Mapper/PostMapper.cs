@@ -8,9 +8,11 @@ namespace LooxLikeAPI.Mapper
     public class PostMapper : IPostMapper
     {
         private IUserRepository _userRepository;
+        private IUserMapper _userMapper;
 
-        public PostMapper(IUserRepository userRepository)
+        public PostMapper(IUserRepository userRepository, IUserMapper userMapper)
         {
+            _userMapper = userMapper;
             _userRepository = userRepository;
         }
 
@@ -23,7 +25,7 @@ namespace LooxLikeAPI.Mapper
                 PhotoUrl = post.PhotoUrl,
                 Text = post.Text,
                 TimeStamp = post.Timestamp,
- //TODO               User = _userRepository.read(post.UserId);
+                User = _userMapper.convert(_userRepository.read(post.UserId))
             };
         }
     }

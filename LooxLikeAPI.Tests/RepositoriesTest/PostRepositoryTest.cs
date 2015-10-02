@@ -3,25 +3,20 @@ using LooxLikeAPI.Repository;
 using NUnit.Framework;
 using Assert = NUnit.Framework.Assert;
 
-namespace LooxLikeAPI.Tests.MapperTests
+namespace LooxLikeAPI.Tests.RepositoriesTest
 {
     [TestFixture]
     public class PostRepositoryTest
     {
         private IPostRepository _sut;
-        private dynamic connection;
-        private readonly string createTable = "create table posts (id bigint identity(1,1) primary key,"+
-            "text nvarchar(160) null,"+
-            "item_id nvarchar(10) not null,"+
-            "user_id bigint not null,"+
-            "timestamp DATETIME not null default(getdate()),"+
-            "photo_url nvarchar(128) not null)";
+        private dynamic _connection;
+        private const string CreateTable = "create table posts (id bigint identity(1,1) primary key," + "text nvarchar(160) null," + "item_id nvarchar(10) not null," + "user_id bigint not null," + "timestamp DATETIME not null default(getdate())," + "photo_url nvarchar(128) not null)";
 
         [SetUp]
-        public void setUp()
+        public void SetUp()
         {
-            connection = DbUtils.createConnection("TestDbPostRepository.sdf",createTable);
-           _sut = new PostRepository(connection);
+            _connection = DbUtils.CreateConnection("TestDbPostRepository.sdf",CreateTable);
+           _sut = new PostRepository(_connection);
         }
 
 

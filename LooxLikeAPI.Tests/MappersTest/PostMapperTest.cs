@@ -18,16 +18,29 @@ namespace LooxLikeAPI.Tests.MappersTest
 
         private IPostMapper _sut;
         private const long UserId = 1;
+        private DbUser fakeUser;
 
         [SetUp]
         public void SetUp()
         {
-            
+            fakeUser = new DbUser
+            {
+                Id = 1,
+                UserName = "user01",
+                FirstName = "FirstName",
+                LastName = "LastName",
+                Sex = "m",
+                Email = "Email",
+                City = "City",
+                DateOfBirth = DateTime.Now,
+                PictureUrl = "PictureUrl"
+            };
+
             var userRepositoryMock = new Mock<IUserRepository>();
-            userRepositoryMock.Setup(it => it.read(UserId)).Returns(new DbUser { Id = UserId });
+            userRepositoryMock.Setup(it => it.read(UserId)).Returns(fakeUser);
 
 
-            _sut = new PostMapper(userRepositoryMock.Object);
+            _sut = new PostMapper(userRepositoryMock.Object, new UserMapper());
         }
 
 
@@ -42,7 +55,7 @@ namespace LooxLikeAPI.Tests.MappersTest
                 PhotoUrl = "photoUrl",
                 Text = "text",
                 Timestamp = now,
-                UserId = UserId
+                UserId = UserId,
             };
 
             var expectedResult = new Post

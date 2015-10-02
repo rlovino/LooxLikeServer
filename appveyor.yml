@@ -29,6 +29,10 @@ after_build:
   7z a myapp.zip LooxLikeAPI\*
 #  7z a myapp.zip LooxLikeAPI\bin\*
 
+branches:
+  only:
+    - master
+    - develop
 
 artifacts:
   - path: myapp.zip

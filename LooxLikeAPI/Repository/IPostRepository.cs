@@ -1,4 +1,5 @@
-﻿using LooxLikeAPI.Models.DBModel;
+﻿using System.Collections.Generic;
+using LooxLikeAPI.Models.DBModel;
 
 namespace LooxLikeAPI.Repository
 {
@@ -6,5 +7,8 @@ namespace LooxLikeAPI.Repository
     {
         DbPost read(long id);
         long save(DbPost post);
+        IList<DbPost> GetDbPostsByPage(int page);
+        IList<DbPost> GetDbPostsByPage(int page, string sex);
+        
     }
 }

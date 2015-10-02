@@ -11,7 +11,7 @@ namespace LooxLikeAPI.Mapper
     {
         public User convert(DbUser user)
         {
-            User.Sex sex = User.Sex.Male;
+            var sex = User.Sex.Male;
             var stringSex = user.Sex;
             if(stringSex.Equals("f"))
                 sex = User.Sex.Female;

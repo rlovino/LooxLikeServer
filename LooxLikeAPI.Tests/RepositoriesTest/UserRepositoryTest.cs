@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using LooxLikeAPI.Models.DBModel;
 using LooxLikeAPI.Repository;
-using LooxLikeAPI.Tests.MapperTests;
 using NUnit.Framework;
 
 namespace LooxLikeAPI.Tests.RepositoriesTest
@@ -15,22 +14,14 @@ namespace LooxLikeAPI.Tests.RepositoriesTest
     {
 
         private IUserRepository _sut;
-        private dynamic connection;
-        private readonly string createTable = "create table users (id bigint identity(1,1) primary key," +
-            "user_name nvarchar(32) not null," +
-            "first_name nvarchar(32) not null," +
-            "last_name nvarchar(32) not null," +
-            "sex nvarchar(1) not null," +
-            "email nvarchar(64) not null," +
-            "date_of_birth datetime not null," +
-            "city nvarchar(64) null," +
-            "picture_url nvarchar(128) not null)";
+        private dynamic _connection;
+        private const string CreateTable = "create table users (id bigint identity(1,1) primary key," + "user_name nvarchar(32) not null," + "first_name nvarchar(32) not null," + "last_name nvarchar(32) not null," + "sex nvarchar(1) not null," + "email nvarchar(64) not null," + "date_of_birth datetime not null," + "city nvarchar(64) null," + "picture_url nvarchar(128) not null)";
 
         [SetUp]
-        public void setUp()
+        public void SetUp()
         {
-            connection = DbUtils.createConnection("TestDbUserRepository.sdf", createTable);
-            _sut = new UserRepository(connection);
+            _connection = DbUtils.CreateConnection("TestDbUserRepository.sdf", CreateTable);
+            _sut = new UserRepository(_connection);
         }
 
 
@@ -39,9 +30,9 @@ namespace LooxLikeAPI.Tests.RepositoriesTest
         public void TestReadUser()
         {
             var now = DateTime.Now;
-            DbUser dbUser = new DbUser{City = "city", DateOfBirth = now, Email = "email@email.com",FirstName = "firstName",LastName = "lastName",PictureUrl = "pictureUrl",Sex = "m",UserName = "userName"};
+            var dbUser = new DbUser{City = "city", DateOfBirth = now, Email = "email@email.com",FirstName = "firstName",LastName = "lastName",PictureUrl = "pictureUrl",Sex = "m",UserName = "userName"};
 
-            long id = _sut.save(dbUser);
+            var id = _sut.save(dbUser);
             var readed = _sut.read(id);
 
             Assert.AreEqual(dbUser.City,readed.City);
