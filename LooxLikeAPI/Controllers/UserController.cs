@@ -4,36 +4,51 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using LooxLikeAPI.Services;
+using LooxLikeAPI.Models.Model;
 
 namespace LooxLikeAPI.Controllers
 {
     public class UserController : ApiController
     {
-        // GET: api/User
-        public IEnumerable<string> Get()
+		private readonly IUserService _userService;
+
+		public UserController(IUserService userService)
         {
-            return new string[] { "value1", "value2" };
+			_userService = userService;
         }
 
-        // GET: api/User/5
-        public string Get(int id)
+        public User Get(long id)
         {
-            return "value";
+            return _userService.GetUser(id);
+
         }
 
-        // POST: api/User
-        public void Post([FromBody]string value)
-        {
-        }
+		//// GET: api/User
+		//public IEnumerable<string> Get()
+		//{
+		//	return new string[] { "value1", "value2" };
+		//}
 
-        // PUT: api/User/5
-        public void Put(int id, [FromBody]string value)
-        {
-        }
+		//// GET: api/User/5
+		//public string Get(int id)
+		//{
+		//	return "value";
+		//}
 
-        // DELETE: api/User/5
-        public void Delete(int id)
-        {
-        }
+		//// POST: api/User
+		//public void Post([FromBody]string value)
+		//{
+		//}
+
+		//// PUT: api/User/5
+		//public void Put(int id, [FromBody]string value)
+		//{
+		//}
+
+		//// DELETE: api/User/5
+		//public void Delete(int id)
+		//{
+		//}
     }
 }
