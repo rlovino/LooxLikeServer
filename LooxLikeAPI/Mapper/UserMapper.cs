@@ -18,6 +18,7 @@ namespace LooxLikeAPI.Mapper
             else if (stringSex.Equals("n"))
                 sex = User.Sex.NoGender;
 
+
             return new User
             {
                 Id = user.Id,
