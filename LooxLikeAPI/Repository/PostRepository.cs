@@ -1,22 +1,36 @@
 ﻿using System.Collections.Generic;
+using LooxLikeAPI.Mapper;
 using LooxLikeAPI.Models.DBModel;
+using LooxLikeAPI.Models.Model;
 
 namespace LooxLikeAPI.Repository
 {
     public class PostRepository : IPostRepository
     {
+        private readonly dynamic _connection;
+        private readonly IPostMapper _mapper;
 
-        private dynamic _connection;
-
-        public PostRepository(dynamic connection)
+        public PostRepository(dynamic connection, IPostMapper mapper)
         {
+            _mapper = mapper;
             _connection = connection;
         }
 
-        public DbPost read(long id)
+        public Post Read(long id)
         {
-            return (DbPost)_connection.posts.FindById(id);
+            var dbPost = (DbPost)_connection.posts.FindById(id);
+            var dbUser = (DbUser) _connection.users.FindById(dbPost.UserId);
+            var result = _mapper.Convert(dbPost, dbUser);
+            return result;
         }
+
+        public long Save(Post post)
+        {
+            var dbPost = _mapper.Convert(post);
+            var result = _connection.posts.Insert(item_id: dbPost.ItemId, text: dbPost.Text, user_id: dbPost.UserId, photo_url: dbPost.PhotoUrl);
+            return result;
+        }
+
 
         public long save(DbPost dbPost)
         {
@@ -24,15 +38,21 @@ namespace LooxLikeAPI.Repository
             return result.id;
         }
 
-        public IList<DbPost> GetDbPostsByPage(int page)
+        public IList<Post> GetDbPostsByPage(int page)
         {
             // TODO paginazione
             var postList = _connection.posts.FindAll();
-            return postList;
+            var result = new List<Post>();
 
+            foreach (DbPost dbPost in postList)
+            {
+                var dbUser = (DbUser)_connection.users.FindById(dbPost.UserId);
+                result.Add(_mapper.Convert(dbPost,dbUser));
+            }
+            return result;
         }
 
-        public IList<DbPost> GetDbPostsByPage(int page, string sex)
+        public IList<Post> GetDbPostsByPage(int page, string sex)
         {
             throw new System.NotImplementedException();
         }

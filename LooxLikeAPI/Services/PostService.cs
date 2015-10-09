@@ -12,6 +12,7 @@ namespace LooxLikeAPI.Services
 {
     public class PostService : IPostService
     {
+        /*
         private IPostMapper _postMapper;
         private IPostRepository _postRepository;
 
@@ -40,7 +41,21 @@ namespace LooxLikeAPI.Services
 
         public Post GetPost(long id)
         {
-            return _postMapper.convert(_postRepository.read(id));
+            return _postMapper.convert(_postRepository.Read(id));
+        }*/
+        public IList<Post> GetPostAtPage(int page)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IList<Post> GetPostAtPage(int page, User.Sex sex)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Post GetPost(long id)
+        {
+            throw new NotImplementedException();
         }
     }
 }

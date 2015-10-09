@@ -7,25 +7,49 @@ namespace LooxLikeAPI.Mapper
 {
     public class PostMapper : IPostMapper
     {
-        private IUserRepository _userRepository;
-        private IUserMapper _userMapper;
-
-        public PostMapper(IUserRepository userRepository, IUserMapper userMapper)
+        public Post Convert(DbPost dbPost, DbUser dbUser)
         {
-            _userMapper = userMapper;
-            _userRepository = userRepository;
+            User.Sex sex = User.Sex.Male;
+            var stringSex = dbUser.Sex;
+            if(stringSex.Equals("f"))
+                sex = User.Sex.Female;
+            else if (stringSex.Equals("n"))
+                sex = User.Sex.NoGender;
+
+            User user = new User
+            {
+                Id = dbUser.Id,
+                City = dbUser.City,
+                DateOfBirth = dbUser.DateOfBirth,
+                Email = dbUser.Email,
+                FirstName = dbUser.FirstName,
+                Gender = sex,
+                LastName = dbUser.LastName,
+                PictureUrl = dbUser.PictureUrl,
+                UserName = dbUser.UserName
+            };
+
+            return new Post
+            {
+                Id = dbPost.Id,
+                ItemId = dbPost.ItemId,
+                PhotoUrl = dbPost.PhotoUrl,
+                Text = dbPost.Text,
+                TimeStamp = dbPost.Timestamp,
+                User = user
+            };
         }
 
-        public Post convert(DbPost post)
+        public DbPost Convert(Post post)
         {
-            return new Post
+            return new DbPost
             {
                 Id = post.Id,
                 ItemId = post.ItemId,
                 PhotoUrl = post.PhotoUrl,
                 Text = post.Text,
-                TimeStamp = post.Timestamp,
-                User = _userMapper.convert(_userRepository.read(post.UserId))
+                Timestamp = post.TimeStamp,
+                UserId = post.User.Id
             };
         }
     }

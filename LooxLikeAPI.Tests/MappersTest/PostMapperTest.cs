@@ -17,58 +17,68 @@ namespace LooxLikeAPI.Tests.MappersTest
     {
 
         private IPostMapper _sut;
-        private const long UserId = 1;
-        private DbUser fakeUser;
+
 
         [SetUp]
         public void SetUp()
         {
-            fakeUser = new DbUser
-            {
-                Id = 1,
-                UserName = "user01",
-                FirstName = "FirstName",
-                LastName = "LastName",
-                Sex = "m",
-                Email = "Email",
-                City = "City",
-                DateOfBirth = DateTime.Now,
-                PictureUrl = "PictureUrl"
-            };
-
-            var userRepositoryMock = new Mock<IUserRepository>();
-            userRepositoryMock.Setup(it => it.read(UserId)).Returns(fakeUser);
-
-
-            _sut = new PostMapper(userRepositoryMock.Object, new UserMapper());
+            _sut = new PostMapper();
+           
         }
 
 
         [Test]
-        public void TestConvertDbPostToPost()
+        public void TestConvertDbPostAndDbUserToPost()
         {
             var now = DateTime.Now;
-            var input = new DbPost
+
+            User user = new User
             {
-                Id = 1, 
-                ItemId = "2",
+                City = "city",
+                DateOfBirth = now,
+                Email = "email",
+                FirstName = "firstName",
+                Gender = User.Sex.Male,
+                Id = 1,
+                LastName = "lastName",
+                PictureUrl = "pictureUrl",
+                UserName = "userName"
+            };
+
+            Post expectedResult = new Post
+            {
+                Id = 1,
+                ItemId = "itemId",
+                PhotoUrl = "photoUrl",
+                Text = "text",
+                TimeStamp = now,
+                User = user
+            };
+
+            var inputDbUser = new DbUser
+            {
+                Id = 1,
+                City = "city",
+                DateOfBirth = now,
+                Email = "email",
+                FirstName = "firstName",
+                LastName = "lastName",
+                PictureUrl = "pictureUrl",
+                Sex = "m",
+                UserName = "userName"
+            };
+
+            var inputdbPost = new DbPost
+            {
+                Id = 1,
+                ItemId = "itemId",
                 PhotoUrl = "photoUrl",
                 Text = "text",
                 Timestamp = now,
-                UserId = UserId,
+                UserId = 1
             };
 
-            var expectedResult = new Post
-            {
-                User = new User {Id=UserId},
-                Id = 1,
-                ItemId = "2",
-                PhotoUrl = "photoUrl",
-                Text = "text",
-                TimeStamp = now
-            };
-
-            Assert.AreEqual(expectedResult,_sut.convert(input));
+            Assert.AreEqual(expectedResult,_sut.Convert(inputdbPost,inputDbUser));
         }
 
     }

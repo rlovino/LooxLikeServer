@@ -5,6 +5,7 @@ namespace LooxLikeAPI.Mapper
 {
     public interface IPostMapper
     {
-        Post convert(DbPost post);
+        Post Convert(DbPost dbPost,DbUser dbUser);
+        DbPost Convert(Post post);  
     }
 }
