@@ -12,16 +12,14 @@ namespace LooxLikeAPI.Services
     public class UserService: IUserService
     {
         private IUserRepository _userRepository;
-        private IUserMapper _userMapper;
 
-        public UserService(IUserRepository userRepository, IUserMapper userMapper)
+        public UserService(IUserRepository userRepository)
         {
             _userRepository = userRepository;
-            _userMapper = userMapper;
         }
         public User GetUser(long id)
         {
-            return _userMapper.convert(_userRepository.read(id));
+            return _userRepository.Read(id);
         }
     }
 }

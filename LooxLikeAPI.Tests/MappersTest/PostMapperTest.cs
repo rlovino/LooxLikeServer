@@ -26,6 +26,48 @@ namespace LooxLikeAPI.Tests.MappersTest
            
         }
 
+        [Test]
+        public void TestConvertPostToDbPost()
+        {
+            var now = DateTime.Now;
+
+            User user = new User
+            {
+                City = "city",
+                DateOfBirth = now,
+                Email = "email",
+                FirstName = "firstName",
+                Gender = User.Sex.Male,
+                Id = 1,
+                LastName = "lastName",
+                PictureUrl = "pictureUrl",
+                UserName = "userName"
+            };
+
+            Post input = new Post
+            {
+                Id = 1,
+                ItemId = "itemId",
+                PhotoUrl = "photoUrl",
+                Text = "text",
+                TimeStamp = now,
+                User = user
+            };
+
+            var expectedResult = new DbPost
+            {
+                Id = 1,
+                ItemId = "itemId",
+                PhotoUrl = "photoUrl",
+                Text = "text",
+                Timestamp = now,
+                UserId = 1
+            };
+
+            Assert.AreEqual(expectedResult,_sut.Convert(input));
+            
+        }
+
 
         [Test]
         public void TestConvertDbPostAndDbUserToPost()
