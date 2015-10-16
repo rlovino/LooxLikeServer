@@ -22,6 +22,50 @@ namespace LooxLikeAPI.Tests.MappersTest
         }
 
         [Test]
+        public void TestConvertUserToDbUser()
+        {
+            var Id = 1;
+            var UserName = "user01";
+            var FirstName = "FirstName";
+            var LastName = "LastName";
+            var Sex = "m";
+            var Email = "user@email";
+            var City = "Bologna";
+            var DateOfBirth = DateTime.Now;
+            var PictureUrl = "picture01";
+
+            var input = new User
+            {
+                Id = Id,
+                UserName = UserName,
+                FirstName = FirstName,
+                LastName = LastName,
+                Gender = User.Sex.Male,
+                Email = Email,
+                City = City,
+                DateOfBirth = DateOfBirth,
+                PictureUrl = PictureUrl
+            };
+
+
+            var expected = new DbUser
+            {
+                Id = Id,
+                UserName = UserName,
+                FirstName = FirstName,
+                LastName = LastName,
+                Sex = Sex,
+                Email = Email,
+                City = City,
+                DateOfBirth = DateOfBirth,
+                PictureUrl = PictureUrl
+            };
+
+            Assert.AreEqual(expected,_sut.Convert(input));
+            
+        }
+
+        [Test]
         public void TestConvertDbUserToUser()
         {
             var Id = 1;
@@ -60,7 +104,7 @@ namespace LooxLikeAPI.Tests.MappersTest
                 PictureUrl = PictureUrl
             };
 
-            var actual = _sut.convert(input);
+            var actual = _sut.Convert(input);
 
             Assert.AreEqual(expected, actual);
 

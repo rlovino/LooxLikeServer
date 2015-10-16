@@ -7,7 +7,6 @@ namespace LooxLikeAPI.Services
     {
         IList<Post> GetPostAtPage(int page);
         IList<Post> GetPostAtPage(int page, User.Sex sex);
-
         Post GetPost(long id);
     }
 

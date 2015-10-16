@@ -4,12 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using LooxLikeAPI.Models.DBModel;
+using LooxLikeAPI.Models.Model;
 
 namespace LooxLikeAPI.Repository
 {
     public interface IUserRepository
     {
-        DbUser read(long id);
-        long save(DbUser post);
+        User Read(long id);
+        long Save(User user);
     }
 }

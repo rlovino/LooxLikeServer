@@ -1,14 +1,15 @@
 ﻿using System.Collections.Generic;
 using LooxLikeAPI.Models.DBModel;
+using LooxLikeAPI.Models.Model;
 
 namespace LooxLikeAPI.Repository
 {
     public interface IPostRepository
     {
-        DbPost read(long id);
-        long save(DbPost post);
-        IList<DbPost> GetDbPostsByPage(int page);
-        IList<DbPost> GetDbPostsByPage(int page, string sex);
+        Post Read(long id);
+        long Save(Post post);
+        IList<Post> GetDbPostsByPage(int page);
+        IList<Post> GetDbPostsByPage(int page, string sex);
         
     }
 }

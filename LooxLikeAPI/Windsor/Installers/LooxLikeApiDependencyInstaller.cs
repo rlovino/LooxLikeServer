@@ -9,6 +9,7 @@ using Castle.MicroKernel.Registration;
 using Castle.MicroKernel.SubSystems.Configuration;
 using Castle.Windsor;
 using LooxLikeAPI.Mapper;
+using LooxLikeAPI.Models.JSONModel.Mapper;
 using LooxLikeAPI.Repository;
 using LooxLikeAPI.Services;
 using Simple.Data;
@@ -22,12 +23,13 @@ namespace LooxLikeAPI.Windsor.Installer
             container.Register(
                 //Register Simple Data Connection
                 Component.For<dynamic>().UsingFactoryMethod(CreateSimpleDataConnection),
+                //Register mapper
+				Component.For(typeof(IUserMapper)).ImplementedBy(typeof(UserMapper)).LifestyleTransient(),
+                Component.For(typeof(IPostMapper)).ImplementedBy(typeof(PostMapper)).LifestyleTransient(),
+				Component.For(typeof(IResponseJsonPostMapper)).ImplementedBy(typeof(ResponseJsonPostMapper)).LifestyleTransient(),
                 //Register repositories
                 Component.For(typeof (IPostRepository)).ImplementedBy(typeof (PostRepository)).LifestyleTransient(),
                 Component.For(typeof(IUserRepository)).ImplementedBy(typeof(UserRepository)).LifestyleTransient(),
-                //Register mapper
-                Component.For(typeof (IPostMapper)).ImplementedBy(typeof (PostMapper)).LifestyleTransient(),
-                Component.For(typeof (IUserMapper)).ImplementedBy(typeof (UserMapper)).LifestyleTransient(),
                 //Register services
                 Component.For(typeof (IPostService)).ImplementedBy(typeof (PostService)).LifestyleTransient(),
 				Component.For(typeof(IUserService)).ImplementedBy(typeof(UserService)).LifestyleTransient(),

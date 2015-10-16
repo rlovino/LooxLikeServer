@@ -7,9 +7,8 @@ namespace LooxLikeAPI.Models.DBModel
 {
     public class DbLike
     {
-
         public long PostId {get; set; }
-        public DateTime Timestamp { get; set; }
         public long UserId { get; set; }
+		public DateTime Timestamp { get; set; }
     }
 }
