@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Castle.Core.Internal;
 using LooxLikeAPI.Models.DBModel;
 using LooxLikeAPI.Models.Model;
 using LooxLikeAPI.Repository;
@@ -7,27 +10,40 @@ namespace LooxLikeAPI.Mapper
 {
     public class PostMapper : IPostMapper
     {
-        public Post Convert(DbPost dbPost, DbUser dbUser)
+		public Post Convert(DbPost dbPost, DbUser dbUser, IEnumerable<DbUser> dbLikeUserList)
         {
-            User.Sex sex = User.Sex.Male;
-            var stringSex = dbUser.Sex;
-            if(stringSex.Equals("f"))
-                sex = User.Sex.Female;
-            else if (stringSex.Equals("n"))
-                sex = User.Sex.NoGender;
 
-            User user = new User
+			User user = new User
             {
                 Id = dbUser.Id,
                 City = dbUser.City,
                 DateOfBirth = dbUser.DateOfBirth,
                 Email = dbUser.Email,
                 FirstName = dbUser.FirstName,
-                Gender = sex,
+                Gender = Sex(dbUser),
                 LastName = dbUser.LastName,
                 PictureUrl = dbUser.PictureUrl,
                 UserName = dbUser.UserName
             };
+
+			var users = new HashSet<User>();
+
+			foreach (var entry in dbLikeUserList)
+			{
+				users.Add(new User
+				{
+					Id = entry.Id,
+					City = entry.City,
+					DateOfBirth = entry.DateOfBirth,
+					Email = entry.Email,
+					FirstName = entry.FirstName,
+					Gender = Sex(entry),
+					LastName = entry.LastName,
+					PictureUrl = entry.PictureUrl,
+					UserName = entry.UserName
+				});
+			}
+			
 
             return new Post
             {
@@ -36,11 +52,24 @@ namespace LooxLikeAPI.Mapper
                 PhotoUrl = dbPost.PhotoUrl,
                 Text = dbPost.Text,
                 TimeStamp = dbPost.Timestamp,
-                User = user
+                User = user,
+				LikeUserEnumerable = users
             };
         }
 
-        public DbPost Convert(Post post)
+	    private User.Sex Sex(DbUser dbUser)
+	    {
+		    User.Sex sex = User.Sex.Male;
+		    var stringSex = dbUser.Sex;
+		    if (stringSex.Equals("f"))
+			    sex = User.Sex.Female;
+		    else if (stringSex.Equals("n"))
+			    sex = User.Sex.NoGender;
+		    return sex;
+	    }
+
+
+	    public DbPost Convert(Post post)
         {
             return new DbPost
             {

@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using LooxLikeAPI.Mapper;
 using LooxLikeAPI.Models.DBModel;
 using LooxLikeAPI.Models.Model;
+using NUnit.Framework;
 
 namespace LooxLikeAPI.Repository
 {
@@ -18,9 +20,25 @@ namespace LooxLikeAPI.Repository
 
         public Post Read(long id)
         {
-            var dbPost = (DbPost)_connection.posts.FindById(id);
-            var dbUser = (DbUser) _connection.users.FindById(dbPost.UserId);
-            var result = _mapper.Convert(dbPost, dbUser);
+	        var usersTable = _connection.users;
+	        var likesTable = _connection.likes;
+	        var postsTable = _connection.posts;
+
+
+
+
+			var dbPost = (DbPost) postsTable.FindById(id);
+			var dbUser = (DbUser) usersTable.FindById(dbPost.UserId);
+			/*var dbLikeUserList = 
+				(List<DbUser>)likesTable.FindByPostId(id)
+				.Join(usersTable).On(usersTable.UserId == likesTable.userId);*/
+	        var dbLikes = (HashSet<DbLike>)likesTable.FindAllByPostId(dbPost.Id);
+			var dbLikeUserSet = new HashSet<DbUser>();
+			foreach (var like in dbLikes)
+			{
+				dbLikeUserSet.Add((DbUser)usersTable.FindById(like.UserId));
+			}
+			var result = _mapper.Convert(dbPost, dbUser, dbLikeUserSet);
             return result;
         }
 
@@ -32,12 +50,6 @@ namespace LooxLikeAPI.Repository
         }
 
 
-        public long save(DbPost dbPost)
-        {
-            var result = _connection.posts.Insert(item_id: dbPost.ItemId, text: dbPost.Text, user_id: dbPost.UserId, photo_url: dbPost.PhotoUrl);
-            return result.id;
-        }
-
         public IList<Post> GetDbPostsByPage(int page)
         {
             // TODO paginazione
@@ -47,7 +59,7 @@ namespace LooxLikeAPI.Repository
             foreach (DbPost dbPost in postList)
             {
                 var dbUser = (DbUser)_connection.users.FindById(dbPost.UserId);
-                result.Add(_mapper.Convert(dbPost,dbUser));
+               // result.Add(_mapper.Convert(dbPost,dbUser));
             }
             return result;
         }

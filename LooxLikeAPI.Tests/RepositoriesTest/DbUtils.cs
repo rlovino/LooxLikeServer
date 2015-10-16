@@ -3,6 +3,7 @@
 using System.Collections.Generic;
 using System.Data.SqlServerCe;
 using System.IO;
+using System.Linq;
 using Simple.Data;
 
 namespace LooxLikeAPI.Tests.RepositoriesTest
@@ -11,18 +12,17 @@ namespace LooxLikeAPI.Tests.RepositoriesTest
     {
         public static dynamic CreateConnection(string dbName, IList<string> createTables, IList<string> queries)
         {
-            if (File.Exists(dbName))
-                File.Delete(dbName);
+			if (File.Exists(dbName))
+				File.Delete(dbName);
 
             var en = new SqlCeEngine("Data Source = " + dbName);
             en.CreateDatabase();
             en.Dispose();
             var conn = new SqlCeConnection("Data Source = " + dbName);
             conn.Open();
-            foreach (var createTable in createTables )
+            foreach (var comm in createTables.Select(createTable => new SqlCeCommand(createTable, conn)))
             {
-                var comm = new SqlCeCommand(createTable, conn);
-                Console.WriteLine("Response: " + comm.ExecuteNonQuery());
+	            Console.WriteLine("Response: " + comm.ExecuteNonQuery());
             }
             foreach (var query in queries)
             {
