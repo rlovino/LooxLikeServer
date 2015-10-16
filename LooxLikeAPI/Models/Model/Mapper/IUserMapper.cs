@@ -10,6 +10,7 @@ namespace LooxLikeAPI.Mapper
     public interface IUserMapper
     {
         User Convert(DbUser dbUser);
-        DbUser Convert(User user);
+	    HashSet<User> Convert(IEnumerable<DbUser> dbUsers); 
+		DbUser Convert(User user);
     }
 }

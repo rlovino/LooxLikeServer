@@ -73,7 +73,7 @@ namespace LooxLikeAPI.Tests.RepositoriesTest
 		[SetUp]
 		public void SetUp()
         {
-            _mapper = new PostMapper();
+            _mapper = new PostMapper(new UserMapper());
 
 			var tables = new List<string>
 			{

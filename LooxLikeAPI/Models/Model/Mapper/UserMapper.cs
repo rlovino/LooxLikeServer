@@ -10,15 +10,11 @@ namespace LooxLikeAPI.Mapper
 {
     public class UserMapper: IUserMapper
     {
+
+		
+
         public User Convert(DbUser user)
         {
-            var sex = User.Sex.Male;
-            var stringSex = user.Sex;
-            if(stringSex.Equals("f"))
-                sex = User.Sex.Female;
-            else if (stringSex.Equals("n"))
-                sex = User.Sex.NoGender;
-
             return new User
             {
                 Id = user.Id,
@@ -26,7 +22,7 @@ namespace LooxLikeAPI.Mapper
                 DateOfBirth = user.DateOfBirth,
                 Email = user.Email,
                 FirstName = user.FirstName,
-                Gender = sex,
+                Gender = Utils.Sex(user.Sex),
                 LastName = user.LastName,
                 PictureUrl = user.PictureUrl,
                 UserName = user.UserName
@@ -34,15 +30,33 @@ namespace LooxLikeAPI.Mapper
 
         }
 
-        public DbUser Convert(User user)
-        {
-            var sex = "m";
-            if (User.Sex.Female == user.Gender)
-                sex = "f";
-            else if (User.Sex.NoGender == user.Gender)
-                sex = "n";
+	    public HashSet<User> Convert(IEnumerable<DbUser> dbUsers)
+	    {
+			var users = new HashSet<User>();
 
-            return new DbUser
+			foreach (var entry in dbUsers)
+			{
+				users.Add(new User
+				{
+					Id = entry.Id,
+					City = entry.City,
+					DateOfBirth = entry.DateOfBirth,
+					Email = entry.Email,
+					FirstName = entry.FirstName,
+					Gender = Utils.Sex(entry.Sex),
+					LastName = entry.LastName,
+					PictureUrl = entry.PictureUrl,
+					UserName = entry.UserName
+				});
+			}
+		    return users;
+	    }
+
+	    public DbUser Convert(User user)
+	    {
+		    var sex = Utils.Sex(user.Gender);
+
+		    return new DbUser
             {
                 City = user.City,
                 DateOfBirth = user.DateOfBirth,
@@ -54,6 +68,10 @@ namespace LooxLikeAPI.Mapper
                 Sex = sex,
                 UserName = user.UserName
             };
-        }
+	    }
+
+		
+
+	    
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using LooxLikeAPI.Mapper;
 using LooxLikeAPI.Models.DBModel;
 using LooxLikeAPI.Models.Model;
@@ -33,16 +34,22 @@ namespace LooxLikeAPI.Repository
 				(List<DbUser>)likesTable.FindByPostId(id)
 				.Join(usersTable).On(usersTable.UserId == likesTable.userId);*/
 	        var dbLikes = (HashSet<DbLike>)likesTable.FindAllByPostId(dbPost.Id);
-			var dbLikeUserSet = new HashSet<DbUser>();
-			foreach (var like in dbLikes)
-			{
-				dbLikeUserSet.Add((DbUser)usersTable.FindById(like.UserId));
-			}
-			var result = _mapper.Convert(dbPost, dbUser, dbLikeUserSet);
+			var dbLikeUserSet = GetDbLikeUserSet(dbLikes, usersTable);
+	        var result = _mapper.Convert(dbPost, dbUser, dbLikeUserSet);
             return result;
         }
 
-        public long Save(Post post)
+	    private HashSet<DbUser> GetDbLikeUserSet(HashSet<DbLike> dbLikes, dynamic usersTable)
+	    {
+		    var dbLikeUserSet = new HashSet<DbUser>();
+		    foreach (var like in dbLikes)
+		    {
+			    dbLikeUserSet.Add((DbUser) usersTable.FindById(like.UserId));
+		    }
+		    return dbLikeUserSet;
+	    }
+
+	    public long Save(Post post)
         {
             var dbPost = _mapper.Convert(post);
             var result = _connection.posts.Insert(item_id: dbPost.ItemId, text: dbPost.Text, user_id: dbPost.UserId, photo_url: dbPost.PhotoUrl);
@@ -59,14 +66,26 @@ namespace LooxLikeAPI.Repository
             foreach (DbPost dbPost in postList)
             {
                 var dbUser = (DbUser)_connection.users.FindById(dbPost.UserId);
-               // result.Add(_mapper.Convert(dbPost,dbUser));
+				var dbLikes = (HashSet<DbLike>)_connection.likes.FindAllByPostId(dbPost.Id);
+				var dbLikeUserSet = GetDbLikeUserSet(dbLikes, _connection.users);
+				result.Add(_mapper.Convert(dbPost, dbUser, dbLikeUserSet));
             }
             return result;
         }
 
         public IList<Post> GetDbPostsByPage(int page, string sex)
         {
-            throw new System.NotImplementedException();
+			var postList = _connection.posts.FindAllBySex(sex);
+			var result = new List<Post>();
+
+			foreach (DbPost dbPost in postList)
+			{
+				var dbUser = (DbUser)_connection.users.FindById(dbPost.UserId);
+				var dbLikes = (HashSet<DbLike>)_connection.likes.FindAllByPostId(dbPost.Id);
+				var dbLikeUserSet = GetDbLikeUserSet(dbLikes, _connection.users);
+				result.Add(_mapper.Convert(dbPost, dbUser, dbLikeUserSet));
+			}
+			return result; 
         }
     }
 }

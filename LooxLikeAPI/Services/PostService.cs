@@ -24,7 +24,7 @@ namespace LooxLikeAPI.Services
 
         public IList<Post> GetPostAtPage(int page, User.Sex sex)
         {
-            return _postRepository.GetDbPostsByPage(page).Where(post => post.User.Gender == sex).ToList();
+	        return _postRepository.GetDbPostsByPage(page, Utils.Sex(sex));
 
         }
 

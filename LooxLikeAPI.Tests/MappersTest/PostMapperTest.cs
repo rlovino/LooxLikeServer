@@ -22,7 +22,7 @@ namespace LooxLikeAPI.Tests.MappersTest
 		[SetUp]
 		public void SetUp()
 		{
-			_sut = new PostMapper();
+			_sut = new PostMapper(new UserMapper());
 
 		}
 
