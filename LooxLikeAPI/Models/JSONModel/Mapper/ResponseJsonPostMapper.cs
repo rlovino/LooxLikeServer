@@ -23,5 +23,21 @@ namespace LooxLikeAPI.Models.JSONModel.Mapper
 				UserName = post.User.UserName
 			};
 		}
+
+        public List<JsonPostResponse> Convert(IList<Post> posts, string username)
+        {
+
+            var list = posts.SelectMany(post => new List<JsonPostResponse>{
+                Convert(post, username)
+            });
+
+            return list.ToList<JsonPostResponse>();
+            //List<JsonPostResponse> convertedPosts = new List<JsonPostResponse>();
+            //foreach (Post post in posts)
+            //{
+            //    convertedPosts.Add(Convert(post, username));
+            //}
+            //return convertedPosts;
+        }
 	}
 }

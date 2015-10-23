@@ -28,6 +28,16 @@ namespace LooxLikeAPI.Controllers
             return _postResponseJsonPostMapper.Convert(_postService.GetPost(id),username);
         }
 
+        [Route("api/post/page/{page:int}")]
+        public IEnumerable<JsonPostResponse> GetAllPostByPage(int page, string gender="")
+        {
+            string username = RequestContext.Principal.Identity.Name;
+            if (gender == "")
+                return _postResponseJsonPostMapper.Convert(_postService.GetPostAtPage(page), username);
+            else
+                throw new NotImplementedException();
+        }
+
 
     }
 }
