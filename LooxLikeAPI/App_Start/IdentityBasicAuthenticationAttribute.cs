@@ -39,6 +39,11 @@ namespace LooxLikeAPI.App_Start
                             context.Principal = principal;
                         }
                     }
+                    else
+                    {
+                        context.ErrorResult = new AuthenticationFailureResult("Authorization required", request);
+                    }
+                    
 
                 }
                 );
