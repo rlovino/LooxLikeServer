@@ -25,10 +25,7 @@ namespace LooxLikeAPI.Controllers
 	    {
 		    string username = RequestContext.Principal.Identity.Name;
 
-            return null;
-
-			//return _postResponseJsonPostMapper.Convert(_postService.GetPost(id),username);
-
+            return _postResponseJsonPostMapper.Convert(_postService.GetPost(id),username);
         }
 
 
