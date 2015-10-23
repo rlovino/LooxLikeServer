@@ -62,11 +62,18 @@ namespace LooxLikeAPI.App_Start
 
         private IPrincipal Authenticate(string userName, string password, System.Threading.CancellationToken cancellationToken)
         {
-            if (registeredUser.Contains(Tuple.Create(userName, password)))
+            if (registeredUser.ContainsKey(userName))
             {
-                var identity = new GenericIdentity(userName);
-                var principal = new GenericPrincipal(identity, new string[] { "user" });
-                return principal;
+                string passwordOut;
+                if (registeredUser.TryGetValue(userName,out passwordOut))
+                {
+                    if( passwordOut.Equals(password))
+                    {
+                        var identity = new GenericIdentity(userName);
+                        var principal = new GenericPrincipal(identity, new string[] { "user" });
+                        return principal;
+                    }
+                }
             }
 
             return null;
@@ -104,10 +111,10 @@ namespace LooxLikeAPI.App_Start
         }
       
 
-        private List<Tuple<String, String>> registeredUser = new List<Tuple<string, string>> {
-            Tuple.Create("alessadro","password"),
-            Tuple.Create("daniele","password"),
-            Tuple.Create("raffaele","password")
+        private IDictionary<string,string> registeredUser = new Dictionary<string,string>() {
+            {"alessandro", "password"},
+            {"daniele","password"},
+            {"raffaele","password"}
         };
 
 
