@@ -30,9 +30,6 @@ namespace LooxLikeAPI.Repository
 
 			var dbPost = (DbPost) postsTable.FindById(id);
 			var dbUser = (DbUser) usersTable.FindById(dbPost.UserId);
-			/*var dbLikeUserList = 
-				(List<DbUser>)likesTable.FindByPostId(id)
-				.Join(usersTable).On(usersTable.UserId == likesTable.userId);*/
 	        var dbLikes = (HashSet<DbLike>)likesTable.FindAllByPostId(dbPost.Id);
 			var dbLikeUserSet = GetDbLikeUserSet(dbLikes, usersTable);
 	        var result = _mapper.Convert(dbPost, dbUser, dbLikeUserSet);
