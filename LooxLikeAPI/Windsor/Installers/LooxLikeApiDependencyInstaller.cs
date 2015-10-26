@@ -9,9 +9,12 @@ using Castle.MicroKernel.Registration;
 using Castle.MicroKernel.SubSystems.Configuration;
 using Castle.Windsor;
 using LooxLikeAPI.Mapper;
+using LooxLikeAPI.Models.JSONModel.Mapper;
 using LooxLikeAPI.Repository;
 using LooxLikeAPI.Services;
 using Simple.Data;
+using LooxLikeAPI.Models;
+using LooxLikeAPI.Models.JSONModel;
 
 namespace LooxLikeAPI.Windsor.Installer
 {
@@ -22,15 +25,18 @@ namespace LooxLikeAPI.Windsor.Installer
             container.Register(
                 //Register Simple Data Connection
                 Component.For<dynamic>().UsingFactoryMethod(CreateSimpleDataConnection),
+                //Register mapper
+				Component.For(typeof(IUserMapper)).ImplementedBy(typeof(UserMapper)).LifestyleTransient(),
+                Component.For(typeof(IPostMapper)).ImplementedBy(typeof(PostMapper)).LifestyleTransient(),
+				Component.For(typeof(IResponseJsonPostMapper)).ImplementedBy(typeof(ResponseJsonPostMapper)).LifestyleTransient(),
                 //Register repositories
                 Component.For(typeof (IPostRepository)).ImplementedBy(typeof (PostRepository)).LifestyleTransient(),
                 Component.For(typeof(IUserRepository)).ImplementedBy(typeof(UserRepository)).LifestyleTransient(),
-                //Register mapper
-                Component.For(typeof (IPostMapper)).ImplementedBy(typeof (PostMapper)).LifestyleTransient(),
-                Component.For(typeof (IUserMapper)).ImplementedBy(typeof (UserMapper)).LifestyleTransient(),
                 //Register services
                 Component.For(typeof (IPostService)).ImplementedBy(typeof (PostService)).LifestyleTransient(),
 				Component.For(typeof(IUserService)).ImplementedBy(typeof(UserService)).LifestyleTransient(),
+                //Register Serializer
+                Component.For(typeof(JsonSerializer)).ImplementedBy(typeof(LowercaseJsonSerializer)).LifestyleSingleton(),
                 //Register controllers
                 Classes.FromThisAssembly().BasedOn<ApiController>().LifestyleScoped()
                 );
@@ -56,8 +62,8 @@ namespace LooxLikeAPI.Windsor.Installer
             return Database.OpenFile(DATABASE_NAME);*/
 
             //return Database.OpenConnection("data source=looxlike-aws-db.cgh0nwmobyrc.eu-central-1.rds.amazonaws.com;initial catalog=LooxLikeDB;user id=looxlike_admin;password=LaPa$$w0rdDB");
-			//return Database.OpenConnection("data source=.;initial catalog=LooxLikeDB;user id=looxlikelogin;password=LaPa$$w0rdDB");
-			return Database.OpenConnection("data source=54.93.89.176;initial catalog=LooxLikeDB;user id=looxlikelogin;password=LaPa$$w0rdDB");
+			return Database.OpenConnection("data source=.;initial catalog=LooxLikeDB;user id=looxlikelogin;password=LaPa$$w0rdDB");
+			//return Database.OpenConnection("data source=54.93.89.176;initial catalog=LooxLikeDB;user id=looxlikelogin;password=LaPa$$w0rdDB");
 			//return Database.OpenConnection("data source=.;initial catalog=LooxLikeDB;user id=sa;password=LaPa$$w0rdDB");
         }
 

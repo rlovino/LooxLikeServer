@@ -1,4 +1,5 @@
-﻿using System.Web.Http;
+﻿using LooxLikeAPI.App_Start;
+using System.Web.Http;
 
 namespace LooxLikeAPI
 {
@@ -6,8 +7,8 @@ namespace LooxLikeAPI
     {
         public static void Register(HttpConfiguration config)
         {
-            // Web API configuration and services
 
+            config.Filters.Add(new IdentityBasicAuthenticationAttribute());
             // Web API routes
             config.MapHttpAttributeRoutes();
 

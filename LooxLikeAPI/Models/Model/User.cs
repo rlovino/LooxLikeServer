@@ -26,41 +26,32 @@ namespace LooxLikeAPI.Models.Model
 
         protected bool Equals(User other)
         {
-            return Id == 
-                other.Id && 
-                string.Equals(UserName, other.UserName) && 
-                string.Equals(FirstName, other.FirstName) && 
-                string.Equals(LastName, other.LastName) && 
-                Gender == other.Gender && 
-                string.Equals(Email, other.Email) && 
-                string.Equals(City, other.City) && 
-                DateOfBirth.Equals(other.DateOfBirth) && 
-                string.Equals(PictureUrl, other.PictureUrl);
+	        return Id == other.Id && string.Equals(UserName, other.UserName) && string.Equals(FirstName, other.FirstName) && string.Equals(LastName, other.LastName) && Gender == other.Gender && string.Equals(Email, other.Email) && string.Equals(City, other.City) && DateOfBirth.Equals(other.DateOfBirth) && string.Equals(PictureUrl, other.PictureUrl);
         }
 
         public override bool Equals(object obj)
         {
-            if (ReferenceEquals(null, obj)) return false;
-            if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != this.GetType()) return false;
-            return Equals((User) obj);
+	        if (ReferenceEquals(null, obj)) return false;
+	        if (ReferenceEquals(this, obj)) return true;
+	        if (obj.GetType() != this.GetType()) return false;
+	        return Equals((User) obj);
         }
 
         public override int GetHashCode()
         {
-            unchecked
-            {
-                var hashCode = Id.GetHashCode();
-                hashCode = (hashCode*397) ^ (UserName != null ? UserName.GetHashCode() : 0);
-                hashCode = (hashCode*397) ^ (FirstName != null ? FirstName.GetHashCode() : 0);
-                hashCode = (hashCode*397) ^ (LastName != null ? LastName.GetHashCode() : 0);
-                hashCode = (hashCode*397) ^ (int) Gender;
-                hashCode = (hashCode*397) ^ (Email != null ? Email.GetHashCode() : 0);
-                hashCode = (hashCode*397) ^ (City != null ? City.GetHashCode() : 0);
-                hashCode = (hashCode*397) ^ DateOfBirth.GetHashCode();
-                hashCode = (hashCode*397) ^ (PictureUrl != null ? PictureUrl.GetHashCode() : 0);
-                return hashCode;
-            }
+	        unchecked
+	        {
+		        var hashCode = Id.GetHashCode();
+		        hashCode = (hashCode*397) ^ (UserName != null ? UserName.GetHashCode() : 0);
+		        hashCode = (hashCode*397) ^ (FirstName != null ? FirstName.GetHashCode() : 0);
+		        hashCode = (hashCode*397) ^ (LastName != null ? LastName.GetHashCode() : 0);
+		        hashCode = (hashCode*397) ^ (int) Gender;
+		        hashCode = (hashCode*397) ^ (Email != null ? Email.GetHashCode() : 0);
+		        hashCode = (hashCode*397) ^ (City != null ? City.GetHashCode() : 0);
+		        hashCode = (hashCode*397) ^ DateOfBirth.GetHashCode();
+		        hashCode = (hashCode*397) ^ (PictureUrl != null ? PictureUrl.GetHashCode() : 0);
+		        return hashCode;
+	        }
         }
     }
 }

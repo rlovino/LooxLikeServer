@@ -75,12 +75,12 @@
   </Choose>
   <ItemGroup>
     <Compile Include="MappersTest\PostMapperTest.cs" />
+    <Compile Include="MappersTest\ResponseJsonPostMapperTest.cs" />
     <Compile Include="MappersTest\UserMapperTest.cs" />
     <Compile Include="RepositoriesTest\DbUtils.cs" />
     <Compile Include="RepositoriesTest\PostRepositoryTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RepositoriesTest\UserRepositoryTest.cs" />
-    <Compile Include="ServicesTest\PostServiceTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

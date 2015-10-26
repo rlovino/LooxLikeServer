@@ -101,6 +101,9 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\AddChallengeOnUnauthorizedResult.cs" />
+    <Compile Include="App_Start\AuthenticationFailureResult.cs" />
+    <Compile Include="App_Start\IdentityBasicAuthenticationAttribute.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\DefaultController.cs" />
     <Compile Include="Controllers\PostController.cs" />
@@ -108,10 +111,15 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Mapper\IPostMapper.cs" />
-    <Compile Include="Mapper\IUserMapper.cs" />
-    <Compile Include="Mapper\PostMapper.cs" />
-    <Compile Include="Mapper\UserMapper.cs" />
+    <Compile Include="Models\JSONModel\LowercaseJsonSerializer.cs" />
+    <Compile Include="Models\JSONModel\Mapper\IResponseJsonPostMapper.cs" />
+    <Compile Include="Models\JSONModel\Mapper\ResponseJsonPostMapper.cs" />
+    <Compile Include="Models\JSONModel\Response\JsonPostResponse.cs" />
+    <Compile Include="Models\JSONModel\JsonSerializer.cs" />
+    <Compile Include="Models\Model\Mapper\IPostMapper.cs" />
+    <Compile Include="Models\Model\Mapper\IUserMapper.cs" />
+    <Compile Include="Models\Model\Mapper\PostMapper.cs" />
+    <Compile Include="Models\Model\Mapper\UserMapper.cs" />
     <Compile Include="Models\DBModel\DbPost.cs" />
     <Compile Include="Models\DBModel\DbLike.cs" />
     <Compile Include="Models\DBModel\DbUser.cs" />
@@ -126,6 +134,7 @@
     <Compile Include="Services\IUserService.cs" />
     <Compile Include="Services\PostService.cs" />
     <Compile Include="Services\UserService.cs" />
+    <Compile Include="Utils\Utils.cs" />
     <Compile Include="Windsor\Installers\LooxLikeApiDependencyInstaller.cs" />
     <Compile Include="Windsor\WindsorDependencyResolver.cs" />
     <Compile Include="Windsor\WindsorDependencyScope.cs" />
@@ -141,8 +150,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Request\" />
-    <Folder Include="Response\" />
+    <Folder Include="Models\JSONModel\Request\" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />

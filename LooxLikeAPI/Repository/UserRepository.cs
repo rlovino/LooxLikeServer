@@ -3,26 +3,34 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using LooxLikeAPI.Mapper;
 using LooxLikeAPI.Models.DBModel;
+using LooxLikeAPI.Models.Model;
 
 namespace LooxLikeAPI.Repository
 {
     public class UserRepository : IUserRepository
     {
-        private dynamic _connection;
+        private readonly dynamic _connection;
+        private readonly IUserMapper _mapper;
 
-        public UserRepository(dynamic connection)
+        public UserRepository(dynamic connection,IUserMapper mapper)
         {
             _connection = connection;
+            _mapper = mapper;
         }
 
-        public DbUser read(long id)
+        public User Read(long id)
         {
-            return (DbUser)_connection.users.FindById(id);
+            DbUser dbUser = (DbUser)_connection.users.FindById(id);
+            return _mapper.Convert(dbUser);
+
         }
 
-        public long save(DbUser dbUser)
+        public long Save(User user)
         {
+            var dbUser = _mapper.Convert(user);
+
             var result = _connection.users.Insert(user_name: dbUser.UserName, first_name: dbUser.FirstName,
                 last_name: dbUser.LastName, sex: dbUser.Sex,
                 email: dbUser.Email, date_of_birth: dbUser.DateOfBirth,
