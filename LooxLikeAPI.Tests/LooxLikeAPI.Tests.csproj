@@ -81,7 +81,6 @@
     <Compile Include="RepositoriesTest\PostRepositoryTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RepositoriesTest\UserRepositoryTest.cs" />
-    <Compile Include="ServicesTest\PostServiceTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
