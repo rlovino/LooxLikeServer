@@ -15,6 +15,7 @@ using LooxLikeAPI.Services;
 using Simple.Data;
 using LooxLikeAPI.Models;
 using LooxLikeAPI.Models.JSONModel;
+using Newtonsoft.Json;
 
 namespace LooxLikeAPI.Windsor.Installer
 {

@@ -16,13 +16,11 @@ namespace LooxLikeAPI.Controllers
     {
         private readonly IPostService _postService;
         private readonly IResponseJsonPostMapper _postResponseJsonPostMapper;
-        private readonly JsonSerializer _jsonSerializer;
 
-        public PostController(IPostService postService, IResponseJsonPostMapper postResponseJsonPostMapper, JsonSerializer serializer)
+        public PostController(IPostService postService, IResponseJsonPostMapper postResponseJsonPostMapper)
         {
 	        _postService = postService;
 	        _postResponseJsonPostMapper = postResponseJsonPostMapper;
-            _jsonSerializer = serializer;
         }
 
 	    public HttpResponseMessage Get(long id)
