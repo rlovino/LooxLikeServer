@@ -13,6 +13,8 @@ using LooxLikeAPI.Models.JSONModel.Mapper;
 using LooxLikeAPI.Repository;
 using LooxLikeAPI.Services;
 using Simple.Data;
+using LooxLikeAPI.Models;
+using LooxLikeAPI.Models.JSONModel;
 
 namespace LooxLikeAPI.Windsor.Installer
 {
@@ -33,6 +35,8 @@ namespace LooxLikeAPI.Windsor.Installer
                 //Register services
                 Component.For(typeof (IPostService)).ImplementedBy(typeof (PostService)).LifestyleTransient(),
 				Component.For(typeof(IUserService)).ImplementedBy(typeof(UserService)).LifestyleTransient(),
+                //Register Serializer
+                Component.For(typeof(JsonSerializer)).ImplementedBy(typeof(LowercaseJsonSerializer)).LifestyleSingleton(),
                 //Register controllers
                 Classes.FromThisAssembly().BasedOn<ApiController>().LifestyleScoped()
                 );
