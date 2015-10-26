@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace LooxLikeAPI.Models
 {
-    interface JsonSerializer
+    public interface JsonSerializer
     {
-        public string Serialize(object o);
+        string Serialize(object o);
     }
 }
