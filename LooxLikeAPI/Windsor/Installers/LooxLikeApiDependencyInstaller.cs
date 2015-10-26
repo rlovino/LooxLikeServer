@@ -62,9 +62,9 @@ namespace LooxLikeAPI.Windsor.Installer
             return Database.OpenFile(DATABASE_NAME);*/
 
             //return Database.OpenConnection("data source=looxlike-aws-db.cgh0nwmobyrc.eu-central-1.rds.amazonaws.com;initial catalog=LooxLikeDB;user id=looxlike_admin;password=LaPa$$w0rdDB");
-			//return Database.OpenConnection("data source=.;initial catalog=LooxLikeDB;user id=looxlikelogin;password=LaPa$$w0rdDB");
+			return Database.OpenConnection("data source=.;initial catalog=LooxLikeDB;user id=looxlikelogin;password=LaPa$$w0rdDB");
 			//return Database.OpenConnection("data source=54.93.89.176;initial catalog=LooxLikeDB;user id=looxlikelogin;password=LaPa$$w0rdDB");
-			return Database.OpenConnection("data source=.;initial catalog=LooxLikeDB;user id=sa;password=LaPa$$w0rdDB");
+			//return Database.OpenConnection("data source=.;initial catalog=LooxLikeDB;user id=sa;password=LaPa$$w0rdDB");
         }
 
 

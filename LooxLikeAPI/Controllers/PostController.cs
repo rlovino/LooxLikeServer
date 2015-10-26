@@ -45,16 +45,24 @@ namespace LooxLikeAPI.Controllers
             string username = RequestContext.Principal.Identity.Name;
 	        if (gender == "")
 	        {
-				List<JsonPostResponse> jsonResponse = _postResponseJsonPostMapper.Convert(_postService.GetPostAtPage(page), username);
+		        List<JsonPostResponse> jsonResponse = _postResponseJsonPostMapper.Convert(_postService.GetPostAtPage(page),
+			        username);
 
+		        HttpResponseMessage httpResponseMessage = Request.CreateResponse(System.Net.HttpStatusCode.OK);
+		        httpResponseMessage.Content = new StringContent(_jsonSerializer.Serialize(jsonResponse), Encoding.Unicode);
+
+		        return httpResponseMessage;
+	        }
+
+	        else
+	        {
+				List<JsonPostResponse> jsonResponse = _postResponseJsonPostMapper.Convert(_postService.GetPostAtPage(page, Utils.Sex(gender)),
+				   username);
 				HttpResponseMessage httpResponseMessage = Request.CreateResponse(System.Net.HttpStatusCode.OK);
 				httpResponseMessage.Content = new StringContent(_jsonSerializer.Serialize(jsonResponse), Encoding.Unicode);
 
 				return httpResponseMessage;
 	        }
-                
-            else
-                throw new NotImplementedException();
         }
 
 

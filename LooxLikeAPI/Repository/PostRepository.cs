@@ -56,33 +56,25 @@ namespace LooxLikeAPI.Repository
 
         public IList<Post> GetDbPostsByPage(int page)
         {
-            // TODO paginazione
             var postList = (List<DbPost>)_connection.posts.All();
-            var result = new List<Post>();
 
-            foreach (DbPost dbPost in postList)
-            {
-                var dbUser = (DbUser)_connection.users.FindById(dbPost.UserId);
-				var dbLikes = (HashSet<DbLike>)_connection.likes.FindAllByPostId(dbPost.Id);
-				var dbLikeUserSet = GetDbLikeUserSet(dbLikes, _connection.users);
-				result.Add(_mapper.Convert(dbPost, dbUser, dbLikeUserSet));
-            }
-            return result;
+	        return (from dbPost in postList 
+					let dbUser = (DbUser) _connection.users.FindById(dbPost.UserId) 
+					let dbLikes = (HashSet<DbLike>) _connection.likes.FindAllByPostId(dbPost.Id) 
+					let dbLikeUserSet = GetDbLikeUserSet(dbLikes, _connection.users) 
+					select _mapper.Convert(dbPost, dbUser, dbLikeUserSet)).Cast<Post>().ToList();
         }
 
         public IList<Post> GetDbPostsByPage(int page, string sex)
         {
-			var postList = _connection.posts.FindAllBySex(sex);
-			var result = new List<Post>();
+			var userList = (List<DbUser>) _connection.users.FindAllBySex(sex);
 
-			foreach (DbPost dbPost in postList)
-			{
-				var dbUser = (DbUser)_connection.users.FindById(dbPost.UserId);
-				var dbLikes = (HashSet<DbLike>)_connection.likes.FindAllByPostId(dbPost.Id);
-				var dbLikeUserSet = GetDbLikeUserSet(dbLikes, _connection.users);
-				result.Add(_mapper.Convert(dbPost, dbUser, dbLikeUserSet));
-			}
-			return result; 
+	        return (from dbUser in userList 
+					let dbPosts = (List<DbPost>) _connection.posts.FindAllById(dbUser.Id) 
+					from dbPost in dbPosts 
+						let dbLikes = (HashSet<DbLike>) _connection.likes.FindAllByPostId(dbPost.Id) 
+						let dbLikeUserSet = GetDbLikeUserSet(dbLikes, _connection.users) 
+						select _mapper.Convert(dbPost, dbUser, dbLikeUserSet)).Cast<Post>().ToList(); 
         }
     }
 }
