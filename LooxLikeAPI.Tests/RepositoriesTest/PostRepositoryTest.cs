@@ -5,6 +5,7 @@ using LooxLikeAPI.Models.DBModel;
 using LooxLikeAPI.Models.Model;
 using LooxLikeAPI.Repository;
 using NUnit.Framework;
+using Simple.Data.Extensions;
 using Assert = NUnit.Framework.Assert;
 
 namespace LooxLikeAPI.Tests.RepositoriesTest
@@ -96,8 +97,66 @@ namespace LooxLikeAPI.Tests.RepositoriesTest
            _sut = new PostRepository(_connection,_mapper);
         }
 
+		[Test]
+		public void TestReadDbPostByPage()
+		{
 
+			var likeUserSet = new HashSet<User>
+			{
+				new User{
+					City = "city1", 
+					UserName = "userName1", 
+					DateOfBirth = DateTime.Parse("1990-01-01").Date,
+					Email = "user1@gmail.com",
+					FirstName = "firstName1",
+					Gender = User.Sex.Male,
+					Id = 2,
+					LastName = "lastName1",
+					PictureUrl = "pictureUrl1"
+				},
+				new User{
+					City = "city2", 
+					UserName = "userName2", 
+					DateOfBirth = DateTime.Parse("1990-01-01").Date,
+					Email = "user2@gmail.com",
+					FirstName = "firstName2",
+					Gender = User.Sex.Male,
+					Id = 3,
+					LastName = "lastName2",
+					PictureUrl = "pictureUrl2"
+				}
+			};
 
+			var user = new User
+			{
+				City = "city",
+				UserName = "userName",
+				DateOfBirth = DateTime.Parse("1990-01-01").Date,
+				Email = "user@gmail.com",
+				FirstName = "firstName",
+				Gender = User.Sex.Male,
+				Id = 1,
+				LastName = "lastName",
+				PictureUrl = "pictureUrl"
+			};
+			var expectedPostList = new List<Post>
+			{
+				new Post
+				{
+					Id = 1,
+					ItemId = "itemId",
+					PhotoUrl = "photoUrl",
+					Text = "text",
+					TimeStamp = DateTime.Now,
+					User = user,
+					LikeUserEnumerable = likeUserSet
+				}
+			};
+
+			const int pageNumber = 1;
+			var actual = _sut.GetDbPostsByPage(pageNumber);
+			Assert.AreEqual(expectedPostList.ToTuplePairs(), actual.ToTuplePairs());
+		}
 
 	    [Test]
         public void TestReadDbPost()

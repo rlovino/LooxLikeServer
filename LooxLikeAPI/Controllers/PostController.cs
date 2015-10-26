@@ -39,12 +39,20 @@ namespace LooxLikeAPI.Controllers
         }
 
         [Route("post/page/{page:int}")]
-        public IEnumerable<JsonPostResponse> GetAllPostByPage(int page, string gender="")
+		public HttpResponseMessage GetAllPostByPage(int page, string gender = "")
         {
             
             string username = RequestContext.Principal.Identity.Name;
-            if (gender == "")
-                return _postResponseJsonPostMapper.Convert(_postService.GetPostAtPage(page), username);
+	        if (gender == "")
+	        {
+				List<JsonPostResponse> jsonResponse = _postResponseJsonPostMapper.Convert(_postService.GetPostAtPage(page), username);
+
+				HttpResponseMessage httpResponseMessage = Request.CreateResponse(System.Net.HttpStatusCode.OK);
+				httpResponseMessage.Content = new StringContent(_jsonSerializer.Serialize(jsonResponse), Encoding.Unicode);
+
+				return httpResponseMessage;
+	        }
+                
             else
                 throw new NotImplementedException();
         }

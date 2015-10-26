@@ -57,7 +57,7 @@ namespace LooxLikeAPI.Repository
         public IList<Post> GetDbPostsByPage(int page)
         {
             // TODO paginazione
-            var postList = _connection.posts.FindAll();
+            var postList = (List<DbPost>)_connection.posts.All();
             var result = new List<Post>();
 
             foreach (DbPost dbPost in postList)
