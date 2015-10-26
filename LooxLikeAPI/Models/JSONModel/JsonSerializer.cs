@@ -8,6 +8,7 @@ namespace LooxLikeAPI.Models
 {
     public interface JsonSerializer
     {
-        string Serialize(object o);
+        string Serialize<T>(T t);
+        T Deserialize<T>(string str) where T : class;
     }
 }

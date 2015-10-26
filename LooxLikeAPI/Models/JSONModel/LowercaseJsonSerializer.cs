@@ -19,9 +19,14 @@ namespace LooxLikeAPI.Models.JSONModel
             };
         }
 
-        public string Serialize(object o)
+        public string Serialize<T>(T t)
         {
-            return JsonConvert.SerializeObject(o,Formatting.Indented,_settings);
+            return JsonConvert.SerializeObject(t, Formatting.Indented, _settings);
+        }
+
+        public T Deserialize<T>(string str) where T : class
+        {
+            throw new NotImplementedException();
         }
     }
 }
