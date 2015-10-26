@@ -6,10 +6,9 @@ using System.Web;
 using System.Web.Http;
 using LooxLikeAPI.Models.JSONModel.Mapper;
 using LooxLikeAPI.Models.JSONModel.Response;
-using LooxLikeAPI.Models.Model;
-using LooxLikeAPI.Models;
 using System.Net.Http;
 using System.Text;
+using Newtonsoft.Json;
 
 namespace LooxLikeAPI.Controllers
 {
@@ -29,11 +28,9 @@ namespace LooxLikeAPI.Controllers
 	    public HttpResponseMessage Get(long id)
 	    {
 		    string username = RequestContext.Principal.Identity.Name;
-
             JsonPostResponse jsonResponse = _postResponseJsonPostMapper.Convert(_postService.GetPost(id), username);
-
-            HttpResponseMessage httpResponseMessage = Request.CreateResponse(System.Net.HttpStatusCode.OK);
-            httpResponseMessage.Content = new StringContent(_jsonSerializer.Serialize(jsonResponse), Encoding.Unicode);
+			HttpResponseMessage httpResponseMessage = Request.CreateResponse(System.Net.HttpStatusCode.OK, jsonResponse);
+			
 
             return httpResponseMessage;
         }
@@ -45,21 +42,16 @@ namespace LooxLikeAPI.Controllers
             string username = RequestContext.Principal.Identity.Name;
 	        if (gender == "")
 	        {
-		        List<JsonPostResponse> jsonResponse = _postResponseJsonPostMapper.Convert(_postService.GetPostAtPage(page),
-			        username);
-
-		        HttpResponseMessage httpResponseMessage = Request.CreateResponse(System.Net.HttpStatusCode.OK);
-		        httpResponseMessage.Content = new StringContent(_jsonSerializer.Serialize(jsonResponse), Encoding.Unicode);
-
-		        return httpResponseMessage;
+		        List<JsonPostResponse> jsonResponse = _postResponseJsonPostMapper.Convert(_postService.GetPostAtPage(page),username);
+				HttpResponseMessage httpResponseMessage = Request.CreateResponse(System.Net.HttpStatusCode.OK, jsonResponse);
+		        
+				return httpResponseMessage;
 	        }
 
 	        else
 	        {
-				List<JsonPostResponse> jsonResponse = _postResponseJsonPostMapper.Convert(_postService.GetPostAtPage(page, Utils.Sex(gender)),
-				   username);
-				HttpResponseMessage httpResponseMessage = Request.CreateResponse(System.Net.HttpStatusCode.OK);
-				httpResponseMessage.Content = new StringContent(_jsonSerializer.Serialize(jsonResponse), Encoding.Unicode);
+				List<JsonPostResponse> jsonResponse = _postResponseJsonPostMapper.Convert(_postService.GetPostAtPage(page, Utils.Sex(gender)),username);
+				HttpResponseMessage httpResponseMessage = Request.CreateResponse(System.Net.HttpStatusCode.OK,jsonResponse);
 
 				return httpResponseMessage;
 	        }

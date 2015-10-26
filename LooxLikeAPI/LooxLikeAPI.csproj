@@ -107,15 +107,12 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\DefaultController.cs" />
     <Compile Include="Controllers\PostController.cs" />
-    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\JSONModel\LowercaseJsonSerializer.cs" />
     <Compile Include="Models\JSONModel\Mapper\IResponseJsonPostMapper.cs" />
     <Compile Include="Models\JSONModel\Mapper\ResponseJsonPostMapper.cs" />
     <Compile Include="Models\JSONModel\Response\JsonPostResponse.cs" />
-    <Compile Include="Models\JSONModel\JsonSerializer.cs" />
     <Compile Include="Models\Model\Mapper\IPostMapper.cs" />
     <Compile Include="Models\Model\Mapper\IUserMapper.cs" />
     <Compile Include="Models\Model\Mapper\PostMapper.cs" />

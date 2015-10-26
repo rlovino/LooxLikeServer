@@ -7,6 +7,7 @@ using System.Web.Routing;
 using Castle.Windsor;
 using Castle.Windsor.Installer;
 using LooxLikeAPI.Windsor;
+using Newtonsoft.Json.Serialization;
 
 namespace LooxLikeAPI
 {
@@ -24,6 +25,10 @@ namespace LooxLikeAPI
         {
             GlobalConfiguration.Configuration.DependencyResolver = new WindsorDependencyResolver(_container.Kernel);
             _container.Install(FromAssembly.This());
+			var formatters = GlobalConfiguration.Configuration.Formatters;
+			var jsonFormatter = formatters.JsonFormatter;
+			var settings = jsonFormatter.SerializerSettings;
+			settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
             GlobalConfiguration.Configure(WebApiConfig.Register);
         }
 
