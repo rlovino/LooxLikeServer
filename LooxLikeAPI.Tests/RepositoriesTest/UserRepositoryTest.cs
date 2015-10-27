@@ -46,6 +46,28 @@ namespace LooxLikeAPI.Tests.RepositoriesTest
         }
 
 
+	    [Test]
+	    public void TestReadUserByUsername()
+	    {
+			var expectedUser = new User
+			{
+				City = "city",
+				UserName = "userName",
+				DateOfBirth = DateTime.Parse("1990-01-01").Date,
+				Email = "user@gmail.com",
+				FirstName = "firstName",
+				Gender = User.Sex.Male,
+				Id = 1,
+				LastName = "lastName",
+				PictureUrl = "pictureUrl"
+			};
+
+			const string username = "userName";
+
+			var actual = _sut.Read(username);
+			Assert.AreEqual(expectedUser, actual);
+	    }
+
 
         [Test]
         public void TestReadUser()
@@ -65,14 +87,7 @@ namespace LooxLikeAPI.Tests.RepositoriesTest
 
 			const int userId = 1;
 	        var actual = _sut.Read(userId);
-	        Assert.AreEqual(expectedUser.City, actual.City);
-			Assert.AreEqual(expectedUser.DateOfBirth.Date, actual.DateOfBirth.Date);
-			Assert.AreEqual(expectedUser.Email, actual.Email);
-			Assert.AreEqual(expectedUser.FirstName, actual.FirstName);
-			Assert.AreEqual(expectedUser.LastName, actual.LastName);
-			Assert.AreEqual(expectedUser.PictureUrl, actual.PictureUrl);
-			Assert.AreEqual(expectedUser.Gender, actual.Gender);
-			Assert.AreEqual(expectedUser.UserName, actual.UserName);
+			Assert.AreEqual(expectedUser,actual);
         }
     }
 }

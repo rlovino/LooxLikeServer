@@ -41,7 +41,6 @@ namespace LooxLikeAPI.Mapper
         {
             return new DbPost
             {
-                Id = post.Id,
                 ItemId = post.ItemId,
                 PhotoUrl = post.PhotoUrl,
                 Text = post.Text,

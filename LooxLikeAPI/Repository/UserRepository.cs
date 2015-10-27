@@ -27,7 +27,13 @@ namespace LooxLikeAPI.Repository
 
         }
 
-        public long Save(User user)
+	    public User Read(string username)
+	    {
+			DbUser dbUser = (DbUser)_connection.users.FindAllByUsername(username).FirstOrDefault();
+			return _mapper.Convert(dbUser);
+		}
+
+	    public long Save(User user)
         {
             var dbUser = _mapper.Convert(user);
 

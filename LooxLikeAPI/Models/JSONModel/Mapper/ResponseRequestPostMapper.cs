@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using LooxLikeAPI.Models.JSONModel.Request;
 using LooxLikeAPI.Models.JSONModel.Response;
 using LooxLikeAPI.Models.Model;
 
 namespace LooxLikeAPI.Models.JSONModel.Mapper
 {
-	public class ResponseJsonPostMapper : IResponseJsonPostMapper
+	public class ResponseRequestPostMapper : IResponseRequestPostMapper
 	{
 		public JsonPostResponse Convert(Post post, string username)
 		{
@@ -32,12 +33,19 @@ namespace LooxLikeAPI.Models.JSONModel.Mapper
             });
 
             return list.ToList<JsonPostResponse>();
-            //List<JsonPostResponse> convertedPosts = new List<JsonPostResponse>();
-            //foreach (Post post in posts)
-            //{
-            //    convertedPosts.Add(Convert(post, username));
-            //}
-            //return convertedPosts;
         }
+
+		public Post Convert(PostRequest request, string photoUrl, User user)
+		{
+			return new Post
+			{
+				ItemId = request.C10,
+				LikeUserEnumerable = new HashSet<User>(),
+				PhotoUrl = photoUrl,
+				Text = request.Description,
+				TimeStamp = DateTime.Now,
+				User = user
+			};
+		}
 	}
 }

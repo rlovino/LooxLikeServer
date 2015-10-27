@@ -32,6 +32,10 @@ namespace LooxLikeAPI.Services
         {
             return _postRepository.Read(id);
         }
-       
+
+	    public Post Save(Post post)
+	    {
+		    return _postRepository.Read(_postRepository.Save(post));
+	    }
     }
 }
