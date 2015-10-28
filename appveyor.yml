@@ -38,9 +38,6 @@ branches:
 artifacts:
   - path: myapp.zip
     name: LooxLikeServer
-
-	
-
 #deploy:
 #  provider: GitHub
 #  auth_token:
