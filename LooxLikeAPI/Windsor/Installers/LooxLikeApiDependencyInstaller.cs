@@ -16,6 +16,7 @@ using Simple.Data;
 using LooxLikeAPI.Models;
 using LooxLikeAPI.Models.JSONModel;
 using Newtonsoft.Json;
+using LooxLikeAPI.Services.UploaderAdapter;
 
 namespace LooxLikeAPI.Windsor.Installer
 {
@@ -33,9 +34,12 @@ namespace LooxLikeAPI.Windsor.Installer
                 //Register repositories
                 Component.For(typeof (IPostRepository)).ImplementedBy(typeof (PostRepository)).LifestyleTransient(),
                 Component.For(typeof(IUserRepository)).ImplementedBy(typeof(UserRepository)).LifestyleTransient(),
+                //Register uploader adapter
+                Component.For(typeof(IUploaderAdapter)).ImplementedBy(typeof(AmazonClientAdapter)).LifestyleTransient(),
                 //Register services
                 Component.For(typeof (IPostService)).ImplementedBy(typeof (PostService)).LifestyleTransient(),
 				Component.For(typeof(IUserService)).ImplementedBy(typeof(UserService)).LifestyleTransient(),
+                Component.For(typeof(IPhotoUploaderService)).ImplementedBy(typeof(PhotoUploaderService)).LifestyleTransient(),
                 //Register controllers
                 Classes.FromThisAssembly().BasedOn<ApiController>().LifestyleScoped()
                 );

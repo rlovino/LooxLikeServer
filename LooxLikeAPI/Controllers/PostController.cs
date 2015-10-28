@@ -11,6 +11,7 @@ using System.Text;
 using System.Web.Http.ModelBinding;
 using LooxLikeAPI.Models.JSONModel.Request;
 using Newtonsoft.Json;
+using LooxLikeAPI.Models.Model.Mapper;
 
 namespace LooxLikeAPI.Controllers
 {
@@ -29,8 +30,8 @@ namespace LooxLikeAPI.Controllers
 		    _userService = userService;
         }
 
-		[HttpPost]
 		[Route("post")]
+        [HttpPost]
 	    public HttpResponseMessage SavePost([ModelBinder(typeof(PostRequestBinder))] PostRequest request)
 		{
 		    string username = RequestContext.Principal.Identity.Name;
