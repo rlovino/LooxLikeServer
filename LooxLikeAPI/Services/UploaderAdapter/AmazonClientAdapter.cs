@@ -23,7 +23,15 @@ namespace LooxLikeAPI.Services.UploaderAdapter
 		public string Upload(byte[] stream, string path)
 		{
 			MemoryStream memoryStream = new MemoryStream(stream);
-			_transferUtility.Upload(memoryStream, BucketName, path);
+			TransferUtilityUploadRequest fileTransferUtilityRequest = new TransferUtilityUploadRequest
+			{
+				BucketName = BucketName,
+				Key = path,
+				InputStream = memoryStream,
+				CannedACL = S3CannedACL.PublicRead
+			};
+
+			_transferUtility.Upload(fileTransferUtilityRequest);
 			return "https://s3.eu-central-1.amazonaws.com/" + BucketName + "/" + path;
 		}
 	}

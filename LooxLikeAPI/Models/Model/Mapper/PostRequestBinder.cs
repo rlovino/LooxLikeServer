@@ -35,9 +35,9 @@ namespace LooxLikeAPI.Models.Model.Mapper
                     try
                     {
                         var postRequest = new PostRequest();
-                        var contentDescription = contents.Result.Single(content => content.Headers.ContentDisposition.Name.Contains("description"));
-                        var contentPhoto = contents.Result.Single(content => content.Headers.ContentDisposition.Name.Contains("photo"));
-                        var contentc10 = contents.Result.Single(content => content.Headers.ContentDisposition.Name.Contains("c10"));
+                        var contentDescription = contents.Result.Single(content => content.Headers.ContentDisposition.Name.Equals("\"description\""));
+						var contentPhoto = contents.Result.Single(content => content.Headers.ContentDisposition.Name.Equals("\"photo\""));
+						var contentc10 = contents.Result.Single(content => content.Headers.ContentDisposition.Name.Equals("\"c10\""));
 
 
                         contentDescription.ReadAsStringAsync().ContinueWith(descriptionTask =>

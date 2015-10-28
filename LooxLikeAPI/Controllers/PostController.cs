@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Http;
 using LooxLikeAPI.Models.JSONModel.Mapper;
@@ -34,6 +35,10 @@ namespace LooxLikeAPI.Controllers
         [HttpPost]
 	    public HttpResponseMessage SavePost([ModelBinder(typeof(PostRequestBinder))] PostRequest request)
 		{
+			if (request == null)
+			{
+				throw new HttpResponseException(HttpStatusCode.BadRequest);
+			}
 		    string username = RequestContext.Principal.Identity.Name;
 			var url = _uploaderService.UploadPhoto(request, username);
 			var user = _userService.GetUser(username);
