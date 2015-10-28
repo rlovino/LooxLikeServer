@@ -9,5 +9,6 @@ namespace LooxLikeAPI.Services
     public interface IUserService
     {
         User GetUser(long id);
+	    User GetUser(string username);
     }
 }

@@ -46,7 +46,6 @@ namespace LooxLikeAPI.Tests.MappersTest
 
 			Post input = new Post
 			{
-				Id = 1,
 				ItemId = "itemId",
 				PhotoUrl = "photoUrl",
 				Text = "text",
@@ -56,7 +55,6 @@ namespace LooxLikeAPI.Tests.MappersTest
 
 			var expectedResult = new DbPost
 			{
-				Id = 1,
 				ItemId = "itemId",
 				PhotoUrl = "photoUrl",
 				Text = "text",
@@ -64,7 +62,9 @@ namespace LooxLikeAPI.Tests.MappersTest
 				UserId = 1
 			};
 
-			Assert.AreEqual(expectedResult, _sut.Convert(input));
+			var actual = _sut.Convert(input);
+
+			Assert.AreEqual(expectedResult, actual);
 		}
 
 

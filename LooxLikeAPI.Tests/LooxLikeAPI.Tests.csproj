@@ -75,7 +75,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="MappersTest\PostMapperTest.cs" />
-    <Compile Include="MappersTest\ResponseJsonPostMapperTest.cs" />
+    <Compile Include="MappersTest\ResponseRequestPostMapperTest.cs" />
     <Compile Include="MappersTest\UserMapperTest.cs" />
     <Compile Include="RepositoriesTest\DbUtils.cs" />
     <Compile Include="RepositoriesTest\PostRepositoryTest.cs" />

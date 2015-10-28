@@ -11,7 +11,7 @@ namespace LooxLikeAPI.Services
 {
     public class UserService: IUserService
     {
-        private IUserRepository _userRepository;
+        private readonly IUserRepository _userRepository;
 
         public UserService(IUserRepository userRepository)
         {
@@ -21,5 +21,10 @@ namespace LooxLikeAPI.Services
         {
             return _userRepository.Read(id);
         }
+
+	    public User GetUser(string username)
+	    {
+			return _userRepository.Read(username);
+		}
     }
 }

@@ -49,8 +49,8 @@ namespace LooxLikeAPI.Repository
 	    public long Save(Post post)
         {
             var dbPost = _mapper.Convert(post);
-            var result = _connection.posts.Insert(item_id: dbPost.ItemId, text: dbPost.Text, user_id: dbPost.UserId, photo_url: dbPost.PhotoUrl);
-            return result;
+            var result = (DbPost)_connection.posts.Insert(item_id: dbPost.ItemId, text: dbPost.Text, user_id: dbPost.UserId, photo_url: dbPost.PhotoUrl);
+		    return result.Id;
         }
 
 

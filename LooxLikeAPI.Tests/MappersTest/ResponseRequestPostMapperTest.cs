@@ -5,21 +5,22 @@ using System.Text;
 using System.Threading.Tasks;
 using NUnit.Framework;
 using LooxLikeAPI.Models.JSONModel.Mapper;
+using LooxLikeAPI.Models.JSONModel.Request;
 using LooxLikeAPI.Models.JSONModel.Response;
 using LooxLikeAPI.Models.Model;
 
 namespace LooxLikeAPI.Tests.MappersTest
 {
 	[TestFixture]
-	class ResponseJsonPostMapperTest
+	class ResponseRequestPostMapperTest
 	{
-		private IResponseJsonPostMapper _sut;
+		private IResponseRequestPostMapper _sut;
 		readonly DateTime _now = DateTime.Now;
 
 		[SetUp]
 		public void SetUp()
 		{
-			_sut = new ResponseJsonPostMapper();
+			_sut = new ResponseRequestPostMapper();
 		}
 
 		[Test]
@@ -161,6 +162,46 @@ namespace LooxLikeAPI.Tests.MappersTest
             Assert.AreEqual(expectedResult, _sut.Convert(input, "userName1"));
 
         }
+
+		[Test]
+		public void TestConvertToPost()
+		{
+			var user = new User
+            {
+                City = "city",
+                UserName = "userName",
+                DateOfBirth = DateTime.Parse("1990-01-01").Date,
+                Email = "user@gmail.com",
+                FirstName = "firstName",
+                Gender = User.Sex.Male,
+                Id = 1,
+                LastName = "lastName",
+                PictureUrl = "pictureUrl"
+            };
+
+			var input = new PostRequest
+			{
+				C10 = "c10",
+				Description = "description",
+				Image = null,
+			};
+
+			var photoUrl = "photoUrlToTest";
+
+			var expectedResult = new Post
+			{
+				ItemId = "c10",
+				PhotoUrl = "photoUrlToTest",
+				Text = "description",
+				User = user,
+				LikeUserEnumerable = new HashSet<User>()
+			};
+
+			var actual = _sut.Convert(input, photoUrl, user);
+
+			Assert.AreEqual(expectedResult,actual);
+
+		}
 
 	}
 }

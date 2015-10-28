@@ -38,6 +38,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AWSSDK, Version=2.3.52.0, Culture=neutral, PublicKeyToken=9f476d3089b52be3, processorArchitecture=MSIL">
+      <HintPath>..\packages\AWSSDK.2.3.52.0\lib\net45\AWSSDK.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Castle.Core, Version=3.3.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
       <HintPath>..\packages\Castle.Core.3.3.0\lib\net45\Castle.Core.dll</HintPath>
       <Private>True</Private>
@@ -110,12 +114,14 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\JSONModel\Mapper\IResponseJsonPostMapper.cs" />
-    <Compile Include="Models\JSONModel\Mapper\ResponseJsonPostMapper.cs" />
+    <Compile Include="Models\JSONModel\Mapper\IResponseRequestPostMapper.cs" />
+    <Compile Include="Models\JSONModel\Mapper\ResponseRequestPostMapper.cs" />
+    <Compile Include="Models\JSONModel\Request\PostRequest.cs" />
     <Compile Include="Models\JSONModel\Response\JsonPostResponse.cs" />
     <Compile Include="Models\Model\Mapper\IPostMapper.cs" />
     <Compile Include="Models\Model\Mapper\IUserMapper.cs" />
     <Compile Include="Models\Model\Mapper\PostMapper.cs" />
+    <Compile Include="Models\Model\Mapper\PostRequestBinder.cs" />
     <Compile Include="Models\Model\Mapper\UserMapper.cs" />
     <Compile Include="Models\DBModel\DbPost.cs" />
     <Compile Include="Models\DBModel\DbLike.cs" />
@@ -128,8 +134,12 @@
     <Compile Include="Repository\PostRepository.cs" />
     <Compile Include="Repository\UserRepository.cs" />
     <Compile Include="Services\IPostService.cs" />
+    <Compile Include="Services\IPhotoUploaderService.cs" />
     <Compile Include="Services\IUserService.cs" />
+    <Compile Include="Services\PhotoUploaderService.cs" />
     <Compile Include="Services\PostService.cs" />
+    <Compile Include="Services\UploaderAdapter\AmazonClientAdapter.cs" />
+    <Compile Include="Services\UploaderAdapter\IUploaderAdapter.cs" />
     <Compile Include="Services\UserService.cs" />
     <Compile Include="Utils\Utils.cs" />
     <Compile Include="Windsor\Installers\LooxLikeApiDependencyInstaller.cs" />
@@ -147,7 +157,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\JSONModel\Request\" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />

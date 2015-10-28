@@ -11,6 +11,7 @@ namespace LooxLikeAPI.Repository
     public interface IUserRepository
     {
         User Read(long id);
+	    User Read(string username);
         long Save(User user);
     }
 }
