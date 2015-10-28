@@ -69,12 +69,12 @@ namespace LooxLikeAPI.Repository
         {
 			var userList = (List<DbUser>) _connection.users.FindAllBySex(sex);
 
-	        return (from dbUser in userList 
-					let dbPosts = (List<DbPost>) _connection.posts.FindAllById(dbUser.Id) 
-					from dbPost in dbPosts 
-						let dbLikes = (HashSet<DbLike>) _connection.likes.FindAllByPostId(dbPost.Id) 
-						let dbLikeUserSet = GetDbLikeUserSet(dbLikes, _connection.users) 
-						select _mapper.Convert(dbPost, dbUser, dbLikeUserSet)).Cast<Post>().ToList(); 
+			return (from dbUser in userList
+					let dbPosts = (List<DbPost>)_connection.posts.FindAllByUserId(dbUser.Id)
+					from dbPost in dbPosts
+					let dbLikes = (HashSet<DbLike>)_connection.likes.FindAllByPostId(dbPost.Id)
+					let dbLikeUserSet = GetDbLikeUserSet(dbLikes, _connection.users)
+					select _mapper.Convert(dbPost, dbUser, dbLikeUserSet)).Cast<Post>().ToList(); 
         }
     }
 }
