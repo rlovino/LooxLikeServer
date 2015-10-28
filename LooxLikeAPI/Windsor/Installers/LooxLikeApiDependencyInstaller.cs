@@ -1,4 +1,4 @@
-﻿using System;
+﻿﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlServerCe;
 using System.IO;
@@ -15,8 +15,8 @@ using LooxLikeAPI.Services;
 using Simple.Data;
 using LooxLikeAPI.Models;
 using LooxLikeAPI.Models.JSONModel;
-using Newtonsoft.Json;
 using LooxLikeAPI.Services.UploaderAdapter;
+using Newtonsoft.Json;
 
 namespace LooxLikeAPI.Windsor.Installer
 {
@@ -28,17 +28,18 @@ namespace LooxLikeAPI.Windsor.Installer
                 //Register Simple Data Connection
                 Component.For<dynamic>().UsingFactoryMethod(CreateSimpleDataConnection),
                 //Register mapper
-				Component.For(typeof(IUserMapper)).ImplementedBy(typeof(UserMapper)).LifestyleTransient(),
+                Component.For(typeof(IUserMapper)).ImplementedBy(typeof(UserMapper)).LifestyleTransient(),
                 Component.For(typeof(IPostMapper)).ImplementedBy(typeof(PostMapper)).LifestyleTransient(),
-				Component.For(typeof(IResponseRequestPostMapper)).ImplementedBy(typeof(ResponseRequestPostMapper)).LifestyleTransient(),
+                Component.For(typeof(IResponseRequestPostMapper)).ImplementedBy(typeof(ResponseRequestPostMapper)).LifestyleTransient(),
                 //Register repositories
-                Component.For(typeof (IPostRepository)).ImplementedBy(typeof (PostRepository)).LifestyleTransient(),
+                Component.For(typeof(IPostRepository)).ImplementedBy(typeof(PostRepository)).LifestyleTransient(),
                 Component.For(typeof(IUserRepository)).ImplementedBy(typeof(UserRepository)).LifestyleTransient(),
-                //Register uploader adapter
+                //Register upload adapter
                 Component.For(typeof(IUploaderAdapter)).ImplementedBy(typeof(AmazonClientAdapter)).LifestyleTransient(),
+
                 //Register services
-                Component.For(typeof (IPostService)).ImplementedBy(typeof (PostService)).LifestyleTransient(),
-				Component.For(typeof(IUserService)).ImplementedBy(typeof(UserService)).LifestyleTransient(),
+                Component.For(typeof(IPostService)).ImplementedBy(typeof(PostService)).LifestyleTransient(),
+                Component.For(typeof(IUserService)).ImplementedBy(typeof(UserService)).LifestyleTransient(),
                 Component.For(typeof(IPhotoUploaderService)).ImplementedBy(typeof(PhotoUploaderService)).LifestyleTransient(),
                 //Register controllers
                 Classes.FromThisAssembly().BasedOn<ApiController>().LifestyleScoped()
@@ -48,28 +49,36 @@ namespace LooxLikeAPI.Windsor.Installer
 
         private static dynamic CreateSimpleDataConnection()
         {
-           /* const string DATABASE_NAME = "testdb.sdf" ;
+            /* const string DATABASE_NAME = "testdb.sdf" ;
             
-            if (File.Exists(DATABASE_NAME))
-                File.Delete(DATABASE_NAME);
+             if (File.Exists(DATABASE_NAME))
+                 File.Delete(DATABASE_NAME);
 
-            SqlCeEngine _en = new SqlCeEngine("Data Source = " + DATABASE_NAME);
-            _en.CreateDatabase();
-            _en.Dispose();
-            SqlCeConnection conn = new SqlCeConnection("Data Source = " + DATABASE_NAME);
-            conn.Open();
-            SqlCeCommand comm = new SqlCeCommand("create table Post (id bigint identity(1,1) primary key, message nvarchar(100))", conn);
-            Console.WriteLine("Response: " + comm.ExecuteNonQuery());
-            conn.Close();
+             SqlCeEngine _en = new SqlCeEngine("Data Source = " + DATABASE_NAME);
+             _en.CreateDatabase();
+             _en.Dispose();
+             SqlCeConnection conn = new SqlCeConnection("Data Source = " + DATABASE_NAME);
+             conn.Open();
+             SqlCeCommand comm = new SqlCeCommand("create table Post (id bigint identity(1,1) primary key, message nvarchar(100))", conn);
+             Console.WriteLine("Response: " + comm.ExecuteNonQuery());
+             conn.Close();
 
-            return Database.OpenFile(DATABASE_NAME);*/
+             return Database.OpenFile(DATABASE_NAME);*/
 
             //return Database.OpenConnection("data source=looxlike-aws-db.cgh0nwmobyrc.eu-central-1.rds.amazonaws.com;initial catalog=LooxLikeDB;user id=looxlike_admin;password=LaPa$$w0rdDB");
-			//return Database.OpenConnection("data source=.;initial catalog=LooxLikeDB;user id=looxlikelogin;password=LaPa$$w0rdDB");
-			//return Database.OpenConnection("data source=54.93.89.176;initial catalog=LooxLikeDB;user id=looxlikelogin;password=LaPa$$w0rdDB");
-			return Database.OpenConnection("data source=.;initial catalog=LooxLikeDB;user id=sa;password=LaPa$$w0rdDB");
+            //return Database.OpenConnection("data source=.;initial catalog=LooxLikeDB;user id=looxlikelogin;password=LaPa$$w0rdDB");
+            //return Database.OpenConnection("data source=54.93.89.176;initial catalog=LooxLikeDB;user id=looxlikelogin;password=LaPa$$w0rdDB");
+            var connectionString = GetConnectionString("c:\\connection_string\\connection_string.conf");
+            return Database.OpenConnection(connectionString);
+            ////return Database.OpenConnection("data source=.;initial catalog=LooxLikeDB;user id=sa;password=LaPa$$w0rdDB");
         }
 
-
+        private static string GetConnectionString(string configFilePath)
+        {
+            var streamReader = new StreamReader(configFilePath);
+            var connectionString = streamReader.ReadToEnd();
+            streamReader.Close();
+            return connectionString;
+        }
     }
 }
