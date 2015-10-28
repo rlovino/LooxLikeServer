@@ -121,6 +121,7 @@
     <Compile Include="Models\Model\Mapper\IPostMapper.cs" />
     <Compile Include="Models\Model\Mapper\IUserMapper.cs" />
     <Compile Include="Models\Model\Mapper\PostMapper.cs" />
+    <Compile Include="Models\Model\Mapper\PostRequestBinder.cs" />
     <Compile Include="Models\Model\Mapper\UserMapper.cs" />
     <Compile Include="Models\DBModel\DbPost.cs" />
     <Compile Include="Models\DBModel\DbLike.cs" />

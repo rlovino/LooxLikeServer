@@ -8,6 +8,7 @@ using LooxLikeAPI.Models.JSONModel.Mapper;
 using LooxLikeAPI.Models.JSONModel.Response;
 using System.Net.Http;
 using System.Text;
+using System.Web.Http.ModelBinding;
 using LooxLikeAPI.Models.JSONModel.Request;
 using Newtonsoft.Json;
 
@@ -30,7 +31,7 @@ namespace LooxLikeAPI.Controllers
 
 		[HttpPost]
 		[Route("post")]
-	    public HttpResponseMessage SavePost(PostRequest request)
+	    public HttpResponseMessage SavePost([ModelBinder(typeof(PostRequestBinder))] PostRequest request)
 		{
 		    string username = RequestContext.Principal.Identity.Name;
 			var url = _uploaderService.UploadPhoto(request, username);
