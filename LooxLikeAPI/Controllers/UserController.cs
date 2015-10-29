@@ -10,7 +10,7 @@ namespace LooxLikeAPI.Controllers
 {
     public class UserController : ApiController
     {
-	    private IUserService _userService;
+	    private readonly IUserService _userService;
 
 	    public UserController(IUserService userService)
 	    {
@@ -18,12 +18,13 @@ namespace LooxLikeAPI.Controllers
 	    }
 
 
-		[Route("user/{username:string}")]
+		[Route("user/avatar/{username}")]
         public HttpResponseMessage Get(string username)
         {
             var user = _userService.GetUser(username);
-            return Request.CreateResponse(System.Net.HttpStatusCode.Redirect, user.PictureUrl);
-				
+			var response = Request.CreateResponse(System.Net.HttpStatusCode.Redirect);
+			response.Headers.Location = new Uri(user.PictureUrl);
+			return response;
         }
 
 
