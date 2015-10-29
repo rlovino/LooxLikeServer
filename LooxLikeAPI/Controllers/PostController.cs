@@ -22,14 +22,31 @@ namespace LooxLikeAPI.Controllers
         private readonly IResponseRequestPostMapper _responseRequestPostMapper;
 	    private readonly IPhotoUploaderService _uploaderService;
 	    private readonly IUserService _userService;
+	    private readonly LikedPostMapper _likedPostMapper;
+	    private readonly LikedPostService _likedPostService;
 
-	    public PostController(IPostService postService, IResponseRequestPostMapper responseRequestPostMapper, IPhotoUploaderService uploaderService, IUserService userService)
+	    public PostController(IPostService postService, IResponseRequestPostMapper responseRequestPostMapper, IPhotoUploaderService uploaderService, IUserService userService, LikedPostMapper likedPostMapper, LikedPostService likedPostService)
         {
 	        _uploaderService = uploaderService;
 	        _postService = postService;
 	        _responseRequestPostMapper = responseRequestPostMapper;
 		    _userService = userService;
+		    _likedPostMapper = likedPostMapper;
+		    _likedPostService = likedPostService;
         }
+
+	    [Route("post/likedpost")]
+	    [HttpPost]
+	    public HttpResponseMessage SetLike([FromBody] LikedPostRequest request)
+	    {
+		    var post = _postService.GetPost(request.PostId);
+		    var user = _userService.GetUser(request.Username);
+		    var likedPost = _likedPostMapper.Convert(user, post);
+		    var result = _likedPostService.Save(likedPost);
+		    var httpMessageResponse = Request.CreateResponse(HttpStatusCode.Created, result);
+		    return httpMessageResponse;
+	    }
+
 
 		[Route("post")]
         [HttpPost]
