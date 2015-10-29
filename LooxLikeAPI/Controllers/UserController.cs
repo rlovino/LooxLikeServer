@@ -22,7 +22,7 @@ namespace LooxLikeAPI.Controllers
         public HttpResponseMessage Get(string username)
         {
             var user = _userService.GetUser(username);
-			HttpResponseMessage responseMessage = new HttpResponseMessage(System.Net.HttpStatusCode.Redirect);
+            return Request.CreateResponse(System.Net.HttpStatusCode.Redirect, user.PictureUrl);
 				
         }
 
