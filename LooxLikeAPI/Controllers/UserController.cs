@@ -28,16 +28,5 @@ namespace LooxLikeAPI.Controllers
 			return response;
         }
 
-        [Authorize]
-        [IdentityBasicAuthentication]
-        [Route("user/{id}")]
-        public HttpResponseMessage Get( long id)
-        {
-           // var user = _userService.GetUser(id);
-            var response = Request.CreateResponse(System.Net.HttpStatusCode.OK,"Hello User");
-            return response;
-        }
-
-
     }
 }
