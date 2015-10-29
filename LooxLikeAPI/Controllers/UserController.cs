@@ -18,11 +18,12 @@ namespace LooxLikeAPI.Controllers
 	    }
 
 
-		[Route("user/avatar/{username:string}")]
+		[Route("user/{username:string}")]
         public HttpResponseMessage Get(string username)
         {
             var user = _userService.GetUser(username);
-            return Request.CreateResponse(System.Net.HttpStatusCode.Redirect, user.PictureUrl);
+			HttpResponseMessage responseMessage = new HttpResponseMessage(System.Net.HttpStatusCode.Redirect);
+				
         }
 
 
