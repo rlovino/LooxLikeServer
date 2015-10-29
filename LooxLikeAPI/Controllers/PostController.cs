@@ -15,9 +15,12 @@ using LooxLikeAPI.Models.JSONModel.Request;
 using LooxLikeAPI.Models.Model;
 using Newtonsoft.Json;
 using LooxLikeAPI.Models.Model.Mapper;
+using LooxLikeAPI.App_Start;
 
 namespace LooxLikeAPI.Controllers
 {
+    [Authorize]
+    [IdentityBasicAuthentication]
     public class PostController : ApiController
     {
         private readonly IPostService _postService;
