@@ -7,7 +7,11 @@ namespace LooxLikeAPI.Models.JSONModel.Request
 {
 	public class LikedPostRequest
 	{
-		public string Username { get; set; }
 		public long PostId { get; set; }
+
+		public LikedPostRequest()
+		{
+			PostId = -1;
+		}
 	}
 }

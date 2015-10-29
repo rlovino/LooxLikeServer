@@ -9,6 +9,7 @@ namespace LooxLikeAPI.Models.Model
 	{
 		public Post Post { get; set; }
 		public User User { get; set; }
+		public DateTime CreationDateTime { get; set; }	
 
 		protected bool Equals(LikedUserPost other)
 		{

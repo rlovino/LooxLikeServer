@@ -111,13 +111,18 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\DefaultController.cs" />
     <Compile Include="Controllers\PostController.cs" />
+    <Compile Include="Exceptions\ReadException.cs" />
+    <Compile Include="Exceptions\SaveException.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\JSONModel\Mapper\IResponseRequestLikePostMapper.cs" />
     <Compile Include="Models\JSONModel\Mapper\IResponseRequestPostMapper.cs" />
+    <Compile Include="Models\JSONModel\Mapper\ResponseRequestLikePostMapper.cs" />
     <Compile Include="Models\JSONModel\Mapper\ResponseRequestPostMapper.cs" />
     <Compile Include="Models\JSONModel\Request\LikedPostRequest.cs" />
     <Compile Include="Models\JSONModel\Request\PostRequest.cs" />
+    <Compile Include="Models\JSONModel\Response\JsonLikeResponse.cs" />
     <Compile Include="Models\JSONModel\Response\JsonPostResponse.cs" />
     <Compile Include="Models\Model\LikedUserPost.cs" />
     <Compile Include="Models\Model\Mapper\ILikedPostMapper.cs" />
@@ -133,8 +138,10 @@
     <Compile Include="Models\Model\Post.cs" />
     <Compile Include="Models\Model\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\ILikeRepository.cs" />
     <Compile Include="Repository\IPostRepository.cs" />
     <Compile Include="Repository\IUserRepository.cs" />
+    <Compile Include="Repository\LikeRepository.cs" />
     <Compile Include="Repository\PostRepository.cs" />
     <Compile Include="Repository\UserRepository.cs" />
     <Compile Include="Services\ILikedPostService.cs" />
