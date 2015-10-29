@@ -112,6 +112,7 @@
     <Compile Include="Controllers\DefaultController.cs" />
     <Compile Include="Controllers\PostController.cs" />
     <Compile Include="Exceptions\ReadException.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Exceptions\SaveException.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
