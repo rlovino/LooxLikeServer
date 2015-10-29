@@ -5,6 +5,7 @@ using LooxLikeAPI.Mapper;
 using LooxLikeAPI.Models.DBModel;
 using LooxLikeAPI.Models.Model;
 using NUnit.Framework;
+using System.Threading.Tasks;
 
 namespace LooxLikeAPI.Repository
 {
@@ -19,21 +20,20 @@ namespace LooxLikeAPI.Repository
             _connection = connection;
         }
 
-        public Post Read(long id)
+        public Task<Post> Read(long id)
         {
-	        var usersTable = _connection.users;
-	        var likesTable = _connection.likes;
-	        var postsTable = _connection.posts;
-
-
-
-
-			var dbPost = (DbPost) postsTable.FindById(id);
-			var dbUser = (DbUser) usersTable.FindById(dbPost.UserId);
-	        var dbLikes = (HashSet<DbLike>)likesTable.FindAllByPostId(dbPost.Id);
-			var dbLikeUserSet = GetDbLikeUserSet(dbLikes, usersTable);
-	        var result = _mapper.Convert(dbPost, dbUser, dbLikeUserSet);
-            return result;
+            return new Task<Post>(() =>
+            {
+                var usersTable = _connection.users;
+                var likesTable = _connection.likes;
+                var postsTable = _connection.posts;
+                var dbPost = (DbPost)postsTable.FindById(id);
+                var dbUser = (DbUser)usersTable.FindById(dbPost.UserId);
+                var dbLikes = (HashSet<DbLike>)likesTable.FindAllByPostId(dbPost.Id);
+                var dbLikeUserSet = GetDbLikeUserSet(dbLikes, usersTable);
+                var result = _mapper.Convert(dbPost, dbUser, dbLikeUserSet);
+                return result;
+            });	        
         }
 
 	    private HashSet<DbUser> GetDbLikeUserSet(HashSet<DbLike> dbLikes, dynamic usersTable)
