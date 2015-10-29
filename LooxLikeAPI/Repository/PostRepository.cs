@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using LooxLikeAPI.Exceptions;
 using LooxLikeAPI.Mapper;
 using LooxLikeAPI.Models.DBModel;
 using LooxLikeAPI.Models.Model;
 using NUnit.Framework;
+using Simple.Data.Ado;
 
 namespace LooxLikeAPI.Repository
 {
@@ -21,19 +23,24 @@ namespace LooxLikeAPI.Repository
 
         public Post Read(long id)
         {
-	        var usersTable = _connection.users;
-	        var likesTable = _connection.likes;
-	        var postsTable = _connection.posts;
+	        try
+	        {
+				var usersTable = _connection.users;
+				var likesTable = _connection.likes;
+				var postsTable = _connection.posts;
 
-
-
-
-			var dbPost = (DbPost) postsTable.FindById(id);
-			var dbUser = (DbUser) usersTable.FindById(dbPost.UserId);
-	        var dbLikes = (HashSet<DbLike>)likesTable.FindAllByPostId(dbPost.Id);
-			var dbLikeUserSet = GetDbLikeUserSet(dbLikes, usersTable);
-	        var result = _mapper.Convert(dbPost, dbUser, dbLikeUserSet);
-            return result;
+				var dbPost = (DbPost)postsTable.FindById(id);
+				var dbUser = (DbUser)usersTable.FindById(dbPost.UserId);
+				var dbLikes = (HashSet<DbLike>)likesTable.FindAllByPostId(dbPost.Id);
+				var dbLikeUserSet = GetDbLikeUserSet(dbLikes, usersTable);
+				var result = _mapper.Convert(dbPost, dbUser, dbLikeUserSet);
+				return result;   
+	        }
+			catch (AdoAdapterException e)
+			{
+				throw new ReadException(e.Message);
+			}
+	        
         }
 
 	    private HashSet<DbUser> GetDbLikeUserSet(HashSet<DbLike> dbLikes, dynamic usersTable)
@@ -48,9 +55,17 @@ namespace LooxLikeAPI.Repository
 
 	    public long Save(Post post)
         {
-            var dbPost = _mapper.Convert(post);
-            var result = (DbPost)_connection.posts.Insert(item_id: dbPost.ItemId, text: dbPost.Text, user_id: dbPost.UserId, photo_url: dbPost.PhotoUrl);
-		    return result.Id;
+		    try
+		    {
+				var dbPost = _mapper.Convert(post);
+				var result = (DbPost)_connection.posts.Insert(item_id: dbPost.ItemId, text: dbPost.Text, user_id: dbPost.UserId, photo_url: dbPost.PhotoUrl);
+				return result.Id; 
+		    }
+			catch (AdoAdapterException e)
+			{
+				throw new SaveException(e.Message);
+			}
+            
         }
 
 

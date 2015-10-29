@@ -15,7 +15,8 @@ using LooxLikeAPI.Services;
 using Simple.Data;
 using LooxLikeAPI.Models;
 using LooxLikeAPI.Models.JSONModel;
-using LooxLikeAPI.Services.UploaderAdapter;
+﻿using LooxLikeAPI.Models.Model.Mapper;
+﻿using LooxLikeAPI.Services.UploaderAdapter;
 using Newtonsoft.Json;
 
 namespace LooxLikeAPI.Windsor.Installer
@@ -31,9 +32,12 @@ namespace LooxLikeAPI.Windsor.Installer
                 Component.For(typeof(IUserMapper)).ImplementedBy(typeof(UserMapper)).LifestyleTransient(),
                 Component.For(typeof(IPostMapper)).ImplementedBy(typeof(PostMapper)).LifestyleTransient(),
                 Component.For(typeof(IResponseRequestPostMapper)).ImplementedBy(typeof(ResponseRequestPostMapper)).LifestyleTransient(),
+				Component.For(typeof(ILikedPostMapper)).ImplementedBy(typeof(LikedPostMapper)),
+				Component.For(typeof(IResponseRequestLikePostMapper)).ImplementedBy(typeof(ResponseRequestLikePostMapper)),
                 //Register repositories
                 Component.For(typeof(IPostRepository)).ImplementedBy(typeof(PostRepository)).LifestyleTransient(),
                 Component.For(typeof(IUserRepository)).ImplementedBy(typeof(UserRepository)).LifestyleTransient(),
+				Component.For(typeof(ILikeRepository)).ImplementedBy(typeof(LikeRepository)).LifestyleTransient(),
                 //Register upload adapter
                 Component.For(typeof(IUploaderAdapter)).ImplementedBy(typeof(AmazonClientAdapter)).LifestyleTransient(),
 
@@ -41,6 +45,7 @@ namespace LooxLikeAPI.Windsor.Installer
                 Component.For(typeof(IPostService)).ImplementedBy(typeof(PostService)).LifestyleTransient(),
                 Component.For(typeof(IUserService)).ImplementedBy(typeof(UserService)).LifestyleTransient(),
                 Component.For(typeof(IPhotoUploaderService)).ImplementedBy(typeof(PhotoUploaderService)).LifestyleTransient(),
+				Component.For(typeof(ILikedPostService)).ImplementedBy(typeof(LikedPostService)),
                 //Register controllers
                 Classes.FromThisAssembly().BasedOn<ApiController>().LifestyleScoped()
                 );

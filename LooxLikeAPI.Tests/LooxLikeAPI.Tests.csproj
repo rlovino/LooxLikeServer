@@ -74,6 +74,7 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="MappersTest\LikedPostMapperTest.cs" />
     <Compile Include="MappersTest\PostMapperTest.cs" />
     <Compile Include="MappersTest\ResponseRequestPostMapperTest.cs" />
     <Compile Include="MappersTest\UserMapperTest.cs" />

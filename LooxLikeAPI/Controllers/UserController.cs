@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using LooxLikeAPI.Services;
+using LooxLikeAPI.App_Start;
 
 namespace LooxLikeAPI.Controllers
 {
@@ -25,6 +26,16 @@ namespace LooxLikeAPI.Controllers
 			var response = Request.CreateResponse(System.Net.HttpStatusCode.Redirect);
 			response.Headers.Location = new Uri(user.PictureUrl);
 			return response;
+        }
+
+        [Authorize]
+        [IdentityBasicAuthentication]
+        [Route("user/{id}")]
+        public HttpResponseMessage Get( long id)
+        {
+           // var user = _userService.GetUser(id);
+            var response = Request.CreateResponse(System.Net.HttpStatusCode.OK,"Hello User");
+            return response;
         }
 
 
