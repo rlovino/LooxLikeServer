@@ -247,7 +247,7 @@ namespace LooxLikeAPI.Tests.RepositoriesTest
 					},
 					LikeUserEnumerable = new HashSet<User>()
 				}
-			};
+			}.OrderByDescending(x => x.Id);
 
 			const int pageNumber = 1;
 			var actual = _sut.GetDbPostsByPage(pageNumber, "m");
@@ -377,7 +377,7 @@ namespace LooxLikeAPI.Tests.RepositoriesTest
 					},
 					LikeUserEnumerable = new HashSet<User>()
 				}
-			};
+			}.OrderByDescending(x => x.Id);
 
 			const int pageNumber = 1;
 			var actual = _sut.GetDbPostsByPage(pageNumber);
@@ -603,7 +603,7 @@ namespace LooxLikeAPI.Tests.RepositoriesTest
 					User = user,
 					LikeUserEnumerable = likeUserSetPost03
 				}
-			};
+			}.OrderByDescending(x => x.Id);
 
 		    var actual = _sut.GetLikedDbPosts(page, userId);
 

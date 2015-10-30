@@ -135,9 +135,10 @@ namespace LooxLikeAPI.Controllers
 		    {
 				string username = RequestContext.Principal.Identity.Name;
 			    var userId = _userService.GetUser(username).Id;
-				List<JsonPostResponse> jsonResponse = _responseRequestPostMapper.Convert(_postService.GetLikedPostByPage(page, userId), username);
-				jsonResponse.Reverse();
-				HttpResponseMessage httpResponseMessage = Request.CreateResponse(System.Net.HttpStatusCode.OK, jsonResponse);
+				List<JsonPostResponse> jsonResponse = 
+					_responseRequestPostMapper.Convert(_postService.GetLikedPostByPage(page, userId), username);
+				HttpResponseMessage httpResponseMessage = 
+					Request.CreateResponse(System.Net.HttpStatusCode.OK, jsonResponse);
 				return httpResponseMessage;
 				
 		    }
@@ -159,8 +160,8 @@ namespace LooxLikeAPI.Controllers
 				string username = RequestContext.Principal.Identity.Name;
 		        List<JsonPostResponse> jsonResponse = null;
 		        
-				jsonResponse = _responseRequestPostMapper.Convert(gender == "" ? _postService.GetPostAtPage(page) : _postService.GetPostAtPage(page, Utils.Sex(gender)), username);
-		        jsonResponse.Reverse();
+				jsonResponse = _responseRequestPostMapper
+					.Convert(gender == "" ? _postService.GetPostAtPage(page) : _postService.GetPostAtPage(page, Utils.Sex(gender)), username);
 				HttpResponseMessage httpResponseMessage = Request.CreateResponse(System.Net.HttpStatusCode.OK, jsonResponse);
 				
 				return httpResponseMessage;

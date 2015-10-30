@@ -77,8 +77,8 @@ namespace LooxLikeAPI.Repository
 	        return (from dbPost in postList 
 					let dbUser = (DbUser) _connection.users.FindById(dbPost.UserId) 
 					let dbLikes = (HashSet<DbLike>) _connection.likes.FindAllByPostId(dbPost.Id) 
-					let dbLikeUserSet = GetDbLikeUserSet(dbLikes, _connection.users) 
-					select _mapper.Convert(dbPost, dbUser, dbLikeUserSet)).Cast<Post>().ToList();
+					let dbLikeUserSet = GetDbLikeUserSet(dbLikes, _connection.users)
+					select _mapper.Convert(dbPost, dbUser, dbLikeUserSet)).Cast<Post>().OrderByDescending(x => x.Id).ToList();
         }
 
         public IList<Post> GetDbPostsByPage(int page, string sex)
@@ -90,19 +90,19 @@ namespace LooxLikeAPI.Repository
 					from dbPost in dbPosts
 					let dbLikes = (HashSet<DbLike>)_connection.likes.FindAllByPostId(dbPost.Id)
 					let dbLikeUserSet = GetDbLikeUserSet(dbLikes, _connection.users)
-					select _mapper.Convert(dbPost, dbUser, dbLikeUserSet)).Cast<Post>().ToList(); 
+					select _mapper.Convert(dbPost, dbUser, dbLikeUserSet)).Cast<Post>().OrderByDescending(x => x.Id).ToList(); 
         }
 
 	    public IList<Post> GetLikedDbPosts(int page, long userId)
 	    {
 		    var likeList = (List<DbLike>) _connection.likes.FindAllByUserId(userId);
-			
-			var dbPosts = likeList.Select(like => (DbPost) _connection.posts.FindById(like.PostId)).ToList();
+
+			var dbPosts = likeList.Select(like => (DbPost)_connection.posts.FindById(like.PostId)).ToList();
 		    return (from dbPost in dbPosts
 					let dbUser = (DbUser)_connection.users.FindById(dbPost.UserId)
 					let dbLikes = (HashSet<DbLike>)_connection.likes.FindAllByPostId(dbPost.Id)
 					let dbLikeUserSet = GetDbLikeUserSet(dbLikes, _connection.users)
-					select _mapper.Convert(dbPost, dbUser, dbLikeUserSet)).Cast<Post>().ToList();
+					select _mapper.Convert(dbPost, dbUser, dbLikeUserSet)).Cast<Post>().OrderByDescending(x => x.Id).ToList();
 	    }
     }
 }
