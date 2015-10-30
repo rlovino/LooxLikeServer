@@ -27,6 +27,5 @@ namespace LooxLikeAPI.Controllers
 			return response;
         }
 
-
     }
 }
