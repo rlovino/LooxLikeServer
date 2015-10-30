@@ -5,7 +5,6 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using LooxLikeAPI.Services;
-using LooxLikeAPI.App_Start;
 
 namespace LooxLikeAPI.Controllers
 {

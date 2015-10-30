@@ -24,7 +24,8 @@ namespace LooxLikeAPI.Models.Model.Mapper
 			return new DbLike
 			{
 				PostId = likedUserPost.Post.Id,
-				UserId = likedUserPost.User.Id
+				UserId = likedUserPost.User.Id,
+				CreationTime = likedUserPost.CreationDateTime
 			};
 		}
 

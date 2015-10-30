@@ -3,34 +3,28 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using LooxLikeAPI.Mapper;
-using LooxLikeAPI.Models.DBModel;
+using LooxLikeAPI.Models.JSONModel.Mapper;
+using LooxLikeAPI.Models.JSONModel.Response;
 using LooxLikeAPI.Models.Model;
-using LooxLikeAPI.Models.Model.Mapper;
-using NUnit;
 using NUnit.Framework;
 
 namespace LooxLikeAPI.Tests.MappersTest
 {
 	[TestFixture]
-	class LikedPostMapperTest
+	class ResponseRequestLikePostMapperTest
 	{
-		private ILikedPostMapper _sut;
-		private IPostMapper _postMapper;
-		private IUserMapper _userMapper;
+		private IResponseRequestLikePostMapper _sut;
 		private readonly DateTime _now = DateTime.Now;
 
 		[SetUp]
 		public void SetUp()
 		{
-			_userMapper = new UserMapper();
-			_postMapper = new PostMapper(_userMapper);
-			_sut = new LikedPostMapper(_postMapper, _userMapper);
+			_sut = new ResponseRequestLikePostMapper();
 		}
 
-		//DbLike Convert(LikedUserPost likedUserPost)
+		//public LikedUserPost Convert(User user, Post post)
 		[Test]
-		public void TestConvertLikedUserPostToDbLike()
+		public void TestConvertToLikedUserPost()
 		{
 			User creatorUser = new User
 			{
@@ -97,99 +91,20 @@ namespace LooxLikeAPI.Tests.MappersTest
 				LikeUserEnumerable = likeUsers
 			};
 
-			var input = new LikedUserPost
+			var expectedNewLikeUser = new User
 			{
-				CreationDateTime = _now,
-				Post = post,
-				User = newLikeUser
-			};
-
-
-			var expected = new DbLike
-			{
-				CreationTime = _now,
-				PostId = 1,
-				UserId = 4
-			};
-
-			var actual = _sut.Convert(input);
-
-			Assert.AreEqual(expected, actual);
-		}
-
-
-		[Test]
-		public void TestConvertDbEntriesToLikedUserPost()
-		{
-
-			DbUser creatorPostDbUser = new DbUser
-			{
-				UserName = "creator_userName",
-				City = "creator_city",
-				DateOfBirth = DateTime.Parse("1990-01-01"),
-				Email = "creator_email",
-				FirstName = "creator_firstName",
-				Id = 1,
-				LastName = "creator_lastName",
-				PictureUrl = "creator_pictureUrl",
-				Sex = "m"
-			};
-			DbUser likedPostDbUser = new DbUser
-			{
-				UserName = "like_userName",
 				City = "like_city",
 				DateOfBirth = DateTime.Parse("1990-01-01"),
 				Email = "like_email",
 				FirstName = "like_firstName",
-				Id = 2,
+				Gender = User.Sex.Male,
+				Id = 4,
 				LastName = "like_lastName",
 				PictureUrl = "like_pictureUrl",
-				Sex = "m"
-			};
-			DbPost post = new DbPost
-			{
-				Id = 1,
-				ItemId = "itemId",
-				PhotoUrl = "photoUrl",
-				Text = "text",
-				Timestamp = _now,
-				UserId = 1
-			};
-			IEnumerable<DbUser> dbLikeUsers = new HashSet<DbUser>
-			{
-				new DbUser
-				{
-					UserName = "userName1",
-					City = "city1",
-					DateOfBirth = DateTime.Parse("1990-01-01"),
-					Email = "email1",
-					FirstName = "firstName1",
-					Id = 3,
-					LastName = "lastName1",
-					PictureUrl = "pictureUrl1",
-					Sex = "m"
-				},
-				new DbUser
-				{
-					UserName = "userName2",
-					City = "city2",
-					DateOfBirth = DateTime.Parse("1990-01-01"),
-					Email = "email2",
-					FirstName = "firstName2",
-					Id = 4,
-					LastName = "lastName2",
-					PictureUrl = "pictureUrl2",
-					Sex = "m"					
-				}
-			};
-			DbLike dbLike = new DbLike
-			{
-				CreationTime = _now,
-				PostId = 1,
-				UserId = 2
+				UserName = "like_userName"
 			};
 
-			User creatorUser = new User
+			User expectedCreatorUser = new User
 			{
 				City = "creator_city",
 				DateOfBirth = DateTime.Parse("1990-01-01"),
@@ -201,8 +116,7 @@ namespace LooxLikeAPI.Tests.MappersTest
 				PictureUrl = "creator_pictureUrl",
 				UserName = "creator_userName"
 			};
-
-			var likeUsers = new HashSet<User>
+			HashSet<User> expectedLikeUsers = new HashSet<User>
 			{
 				new User
 				{
@@ -211,7 +125,7 @@ namespace LooxLikeAPI.Tests.MappersTest
 					Email = "email1",
 					FirstName = "firstName1",
 					Gender = User.Sex.Male,
-					Id = 3,
+					Id = 2,
 					LastName = "lastName1",
 					PictureUrl = "pictureUrl1",
 					UserName = "userName1"
@@ -223,47 +137,117 @@ namespace LooxLikeAPI.Tests.MappersTest
 					Email = "email2",
 					FirstName = "firstName2",
 					Gender = User.Sex.Male,
-					Id = 4,
+					Id = 3,
 					LastName = "lastName2",
 					PictureUrl = "pictureUrl2",
 					UserName = "userName2"
 				}
 			};
-
-			var newLikeUser = new User
+			var expected = new LikedUserPost
 			{
-				City = "like_city",
-				DateOfBirth = DateTime.Parse("1990-01-01"),
-				Email = "like_email",
-				FirstName = "like_firstName",
-				Gender = User.Sex.Male,
-				Id = 2,
-				LastName = "like_lastName",
-				PictureUrl = "like_pictureUrl",
-				UserName = "like_userName"
+				CreationDateTime = _now,
+				Post = new Post
+				{
+					Id = 1,
+					ItemId = "itemId",
+					PhotoUrl = "photoUrl",
+					Text = "text",
+					TimeStamp = _now,
+					LikeUserEnumerable = expectedLikeUsers,
+					User = expectedCreatorUser
+				},
+				User = expectedNewLikeUser
 			};
 
-			Post postToLike = new Post
+			var actual = _sut.Convert(newLikeUser, post);
+
+			Assert.AreEqual(expected, actual);
+
+		}
+
+		//public JsonLikeResponse Convert(LikedUserPost likedUserPost)
+		[Test]
+		public void TestConvertLikedUserPostToJsonLikeResponse()
+		{
+			User creatorUserToTest = new User
+			{
+				City = "creator_city",
+				DateOfBirth = DateTime.Parse("1990-01-01"),
+				Email = "creator_email",
+				FirstName = "creator_firstName",
+				Gender = User.Sex.Male,
+				Id = 1,
+				LastName = "creator_lastName",
+				PictureUrl = "creator_pictureUrl",
+				UserName = "creator_userName"
+			};
+			HashSet<User> likeUsersListToTest = new HashSet<User>
+			{
+				new User
+				{
+					City = "city1",
+					DateOfBirth = DateTime.Parse("1990-01-01"),
+					Email = "email1",
+					FirstName = "firstName1",
+					Gender = User.Sex.Male,
+					Id = 2,
+					LastName = "lastName1",
+					PictureUrl = "pictureUrl1",
+					UserName = "userName1"
+				},
+				new User
+				{
+					City = "city2",
+					DateOfBirth = DateTime.Parse("1990-01-01"),
+					Email = "email2",
+					FirstName = "firstName2",
+					Gender = User.Sex.Male,
+					Id = 3,
+					LastName = "lastName2",
+					PictureUrl = "pictureUrl2",
+					UserName = "userName2"
+				}
+			};
+			Post postToTest = new Post
 			{
 				Id = 1,
 				ItemId = "itemId",
 				PhotoUrl = "photoUrl",
 				Text = "text",
 				TimeStamp = _now,
-				User = creatorUser,
-				LikeUserEnumerable = likeUsers
+				LikeUserEnumerable = likeUsersListToTest,
+				User = creatorUserToTest
 			};
-
-			var expected = new LikedUserPost
+			User likeUserToTest = new User
+			{
+				City = "like_city",
+				DateOfBirth = DateTime.Parse("1990-01-01"),
+				Email = "like_email",
+				FirstName = "like_firstName",
+				Gender = User.Sex.Male,
+				Id = 4,
+				LastName = "like_lastName",
+				PictureUrl = "like_pictureUrl",
+				UserName = "like_userName"
+			};
+			var input = new LikedUserPost
 			{
 				CreationDateTime = _now,
-				Post = postToLike,
-				User = newLikeUser
+				Post = postToTest,
+				User = likeUserToTest
 			};
 
-			var actual = _sut.Convert(creatorPostDbUser, likedPostDbUser, post, dbLikeUsers, dbLike);
+			var expected = new JsonLikeResponse
+			{
+				likedDateTime = _now,
+				likedPostId = 1,
+				username = "like_userName"
+			};
+
+			var actual = _sut.Convert(input);
 
 			Assert.AreEqual(expected, actual);
 		}
+
 	}
 }
