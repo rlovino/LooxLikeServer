@@ -28,7 +28,7 @@ namespace LooxLikeAPI.Services
 			foreach (var t in hash)
 				md5String.Append(t.ToString("x2"));
 			
-			var path = username + "/" + postRequest.C10 + "_" + md5String;
+			var path = username + "/" + postRequest.C10 + "_" + md5String + postRequest.ImageExtension.ToLower();
 			return _uploaderAdapter.Upload(postRequest.Image, path);
 		}
 	}

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Http.Controllers;
 using System.Web.Http.ModelBinding;
@@ -17,6 +18,14 @@ namespace LooxLikeAPI.Models.Model.Mapper
 		public PostRequestBinder()
 		{
 
+		}
+
+		private static string GetFileExtension(string filename)
+		{
+			char[] charToTrim = { '\\', '"' };
+			var str = filename.Trim(charToTrim);
+			Match m = Regex.Match(str, ".[a-zA-Z0-9]*$");
+			return m.Value;
 		}
 
 		public bool BindModel(HttpActionContext actionContext, ModelBindingContext bindingContext)
@@ -40,6 +49,12 @@ namespace LooxLikeAPI.Models.Model.Mapper
 							contents.Result.Single(content => content.Headers.ContentDisposition.Name.Equals("\"description\""));
 						var contentPhoto = contents.Result.Single(content => content.Headers.ContentDisposition.Name.Equals("\"photo\""));
 						var contentc10 = contents.Result.Single(content => content.Headers.ContentDisposition.Name.Equals("\"c10\""));
+						
+
+						
+						postRequest.ImageExtension = GetFileExtension(contentPhoto.Headers.ContentDisposition.FileName);
+						
+		
 
 						var tasks = new[]
 						{

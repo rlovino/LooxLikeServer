@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using LooxLikeAPI.Services;
+using LooxLikeAPI.App_Start;
 
 namespace LooxLikeAPI.Controllers
 {
@@ -26,6 +27,8 @@ namespace LooxLikeAPI.Controllers
 			response.Headers.Location = new Uri(user.PictureUrl);
 			return response;
         }
+
+
 
     }
 }

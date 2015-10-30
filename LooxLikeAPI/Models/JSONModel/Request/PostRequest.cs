@@ -10,5 +10,6 @@ namespace LooxLikeAPI.Models.JSONModel.Request
 		public string Description { get; set; }
 		public string C10 { get; set; }
 		public byte[] Image { get; set; }
+		public string ImageExtension { get; set; }
 	}
 }
