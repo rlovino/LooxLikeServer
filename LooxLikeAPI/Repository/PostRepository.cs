@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Castle.Core;
 using LooxLikeAPI.Exceptions;
 using LooxLikeAPI.Mapper;
 using LooxLikeAPI.Models.DBModel;
@@ -92,5 +93,16 @@ namespace LooxLikeAPI.Repository
 					select _mapper.Convert(dbPost, dbUser, dbLikeUserSet)).Cast<Post>().ToList(); 
         }
 
+	    public IList<Post> GetLikedDbPosts(int page, long userId)
+	    {
+		    var likeList = (List<DbLike>) _connection.likes.FindAllByUserId(userId);
+			
+			var dbPosts = likeList.Select(like => (DbPost) _connection.posts.FindById(like.PostId)).ToList();
+		    return (from dbPost in dbPosts
+					let dbUser = (DbUser)_connection.users.FindById(dbPost.UserId)
+					let dbLikes = (HashSet<DbLike>)_connection.likes.FindAllByPostId(dbPost.Id)
+					let dbLikeUserSet = GetDbLikeUserSet(dbLikes, _connection.users)
+					select _mapper.Convert(dbPost, dbUser, dbLikeUserSet)).Cast<Post>().ToList();
+	    }
     }
 }

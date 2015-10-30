@@ -28,6 +28,11 @@ namespace LooxLikeAPI.Services
 
         }
 
+		public IList<Post> GetLikedPostByPage(int page, long userId)
+		{
+			return _postRepository.GetLikedDbPosts(page, userId);
+		}
+
         public Post GetPost(long id)
         {
             return _postRepository.Read(id);
@@ -37,5 +42,6 @@ namespace LooxLikeAPI.Services
 	    {
 		    return _postRepository.Read(_postRepository.Save(post));
 	    }
+
     }
 }

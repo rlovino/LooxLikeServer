@@ -119,7 +119,11 @@ namespace LooxLikeAPI.App_Start
         private IDictionary<string,string> registeredUser = new Dictionary<string,string>() {
             {"alessandro", "password"},
             {"daniele","password"},
-            {"raffaele","password"}
+            {"raffaele","password"},
+			{"cecilia","password"},
+			{"isabella","password"},
+			{"sara","password"},
+			{"nog","password"}
         };
 
 

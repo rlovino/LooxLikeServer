@@ -124,27 +124,42 @@ namespace LooxLikeAPI.Controllers
 		    
         }
 
+	    [Route("post/liked/page/{page:int}")]
+	    public HttpResponseMessage GetAllLikedPost(int page)
+	    {
+		    try
+		    {
+				string username = RequestContext.Principal.Identity.Name;
+			    var userId = _userService.GetUser(username).Id;
+				List<JsonPostResponse> jsonResponse = _responseRequestPostMapper.Convert(_postService.GetLikedPostByPage(page, userId), username);
+				jsonResponse.Reverse();
+				HttpResponseMessage httpResponseMessage = Request.CreateResponse(System.Net.HttpStatusCode.OK, jsonResponse);
+				return httpResponseMessage;
+				
+		    }
+			catch (ReadException exception)
+			{
+				throw new HttpResponseException(Request.CreateResponse(System.Net.HttpStatusCode.NotFound));
+			}
+			catch (SaveException exception)
+			{
+				throw new HttpResponseException(Request.CreateResponse(System.Net.HttpStatusCode.NotAcceptable));
+			}
+	    }
+
         [Route("post/page/{page:int}")]
 		public HttpResponseMessage GetAllPostByPage(int page, string gender = "")
         {
 	        try
 	        {
 				string username = RequestContext.Principal.Identity.Name;
-				if (gender == "")
-				{
-					List<JsonPostResponse> jsonResponse = _responseRequestPostMapper.Convert(_postService.GetPostAtPage(page), username);
-					HttpResponseMessage httpResponseMessage = Request.CreateResponse(System.Net.HttpStatusCode.OK, jsonResponse);
-
-					return httpResponseMessage;
-				}
-
-				else
-				{
-					List<JsonPostResponse> jsonResponse = _responseRequestPostMapper.Convert(_postService.GetPostAtPage(page, Utils.Sex(gender)), username);
-					HttpResponseMessage httpResponseMessage = Request.CreateResponse(System.Net.HttpStatusCode.OK, jsonResponse);
-
-					return httpResponseMessage;
-				} 
+		        List<JsonPostResponse> jsonResponse = null;
+		        
+				jsonResponse = _responseRequestPostMapper.Convert(gender == "" ? _postService.GetPostAtPage(page) : _postService.GetPostAtPage(page, Utils.Sex(gender)), username);
+		        jsonResponse.Reverse();
+				HttpResponseMessage httpResponseMessage = Request.CreateResponse(System.Net.HttpStatusCode.OK, jsonResponse);
+				
+				return httpResponseMessage;
 	        }
 			catch (ReadException exception)
 			{
