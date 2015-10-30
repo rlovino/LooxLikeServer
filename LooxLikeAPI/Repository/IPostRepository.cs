@@ -10,6 +10,7 @@ namespace LooxLikeAPI.Repository
         long Save(Post post);
         IList<Post> GetDbPostsByPage(int page);
         IList<Post> GetDbPostsByPage(int page, string sex);
-        
+
+	    IList<Post> GetLikedDbPosts(int page, long userId);
     }
 }

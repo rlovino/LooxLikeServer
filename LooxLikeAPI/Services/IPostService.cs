@@ -9,6 +9,7 @@ namespace LooxLikeAPI.Services
         IList<Post> GetPostAtPage(int page, User.Sex sex);
         Post GetPost(long id);
 	    Post Save(Post post);
+		IList<Post> GetLikedPostByPage(int page, long userId);
     }
 
 }
