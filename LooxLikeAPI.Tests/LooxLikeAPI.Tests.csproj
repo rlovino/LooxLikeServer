@@ -76,9 +76,11 @@
   <ItemGroup>
     <Compile Include="MappersTest\LikedPostMapperTest.cs" />
     <Compile Include="MappersTest\PostMapperTest.cs" />
+    <Compile Include="MappersTest\ResponseRequestLikePostMapperTest.cs" />
     <Compile Include="MappersTest\ResponseRequestPostMapperTest.cs" />
     <Compile Include="MappersTest\UserMapperTest.cs" />
     <Compile Include="RepositoriesTest\DbUtils.cs" />
+    <Compile Include="RepositoriesTest\LikeRepositoryTest.cs" />
     <Compile Include="RepositoriesTest\PostRepositoryTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RepositoriesTest\UserRepositoryTest.cs" />

@@ -14,7 +14,8 @@ namespace LooxLikeAPI.Models.JSONModel.Mapper
 			return new LikedUserPost
 			{
 				Post = post,
-				User = user
+				User = user,
+				CreationDateTime = DateTime.Now
 			};
 		}		
 

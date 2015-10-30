@@ -32,7 +32,7 @@ namespace LooxLikeAPI.Repository
 			{
 				var dbLike = _likeMapper.Convert(likedPost);
 				_connection.likes.Insert(post_id: dbLike.PostId, user_id: dbLike.UserId);
-				return new Tuple<long, long>(dbLike.UserId, dbLike.PostId);
+				return new Tuple<long, long>(dbLike.PostId, dbLike.UserId);
 			}
 			catch (AdoAdapterException e)
 			{
